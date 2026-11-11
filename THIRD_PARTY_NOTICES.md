@@ -1,34 +1,53 @@
 # Third-party notices
 
-## Engravings
+## Prints
 
-The pictures under `src/assets/artwork` are public-domain works taken from Wikimedia
-Commons, cropped and, for line engravings, converted to ink on a transparent background by
-`scripts/artwork.mjs`. The list below mirrors `src/content/artwork.json`, which is the
-source of truth.
+The collages under `public/collage` are made from the public-domain works below, taken from
+Wikimedia Commons and cut, torn, re-inked or screened by `scripts/collage`. The list mirrors
+`src/content/artwork.json`, which is the source of truth and also feeds the `/creditos` page.
 
-| File             | Work                                                                                   | Author and year                     | Licence       | Source |
-| ---------------- | -------------------------------------------------------------------------------------- | ----------------------------------- | ------------- | ------ |
-| `cygnus.webp`    | Cygnus, from _Firmamentum Sobiescianum sive Uranographia_                              | Johannes Hevelius, 1690             | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Johannes_Hevelius_-_Cygnus.jpg) |
-| `lyra.webp`      | Lyra, from the same atlas                                                              | Johannes Hevelius, 1690             | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Johannes_Hevelius_-_Lyra.jpg) |
-| `ursa-minor.webp`| Ursa Minor, from the same atlas                                                        | Johannes Hevelius, 1690             | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Johannes_Hevelius_-_Ursa_Minor.jpg) |
-| `flammarion.webp`| Wood engraving from Camille Flammarion, _L'atmosphère: météorologie populaire_         | Anonymous, 1888                     | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:FlammarionWoodcut.jpg) |
-| `moon.webp`      | Map of the Moon, from _Selenographia_                                                  | Johannes Hevelius, 1647             | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Hevelius_Map_of_the_Moon_1647.jpg) |
-| `turk.webp`      | The Turk, from _Ueber den Schachspieler des Herrn von Kempelen und dessen Nachbildung_ | Joseph Friedrich zu Racknitz, 1789  | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Racknitz_-_The_Turk_1.jpg) |
-| `microscope.webp`| Compound microscope, from René Descartes, _La Dioptrique_                              | Anonymous, 1637                     | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Compound_microscope_as_rendered_by_artist_in_Descartes_%22La_Dioptrique%22_LCCN2006690473.jpg) |
-| `jupiter.webp`   | Jupiter, from _The Trouvelot Astronomical Drawings_                                    | Étienne Léopold Trouvelot, 1881     | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Trouvelot_-_Jupiter_-_1880.jpg) |
-| `pigeons.webp`   | Pigeon messengers, from _Harper's New Monthly Magazine_                                | Anonymous, 1873                     | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Pigeon_Messengers_(Harper%27s_Engraving).png) |
-| `printer.webp`   | The printer, from _Das Ständebuch_                                                     | Jost Amman, 1568                    | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Buchdrucker-1568.png) |
-| `barometer.webp` | Man beside a barometer, Rijksmuseum RP-P-1911-3423                                     | Anonymous, 1748–1877                | CC0           | [Commons](https://commons.wikimedia.org/wiki/File:Man_bij_een_barometer,_RP-P-1911-3423.jpg) |
-| `scales.webp`    | Vignette with scales, Rijksmuseum RP-P-1909-2656                                       | Anonymous, 1826–1870                | CC0           | [Commons](https://commons.wikimedia.org/wiki/File:Vignet_met_weegschaal,_RP-P-1909-2656.jpg) |
+| Id                 | Work                                                                    | Author and year                              | Licence       | Source |
+| ------------------ | ----------------------------------------------------------------------- | -------------------------------------------- | ------------- | ------ |
+| `octopus-macropus` | _Octopus macropus_, from Giuseppe Jatta, _I Cefalopodi viventi nel Golfo di Napoli_ | Comingio Merculiano, 1896        | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Octopus_macropus_Merculiano.jpg) |
+| `marbled-1735`     | Marbled endpaper of an _Œuvres d’Horace_, Paris                          | Anonymous, c. 1735                           | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:PaperMarbling005France1735.jpg) |
+| `marbled-1720`     | Marbled endpaper of a Quintilian edited by Burmann, Leiden 1720          | Anonymous, 1720–1770                         | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Marbled_endpaper,_between_1720_and_1770,_from_Quintilian_ed._Burmann,_Leiden_1720.jpg) |
+| `scales`           | Vignette with scales, Rijksmuseum RP-P-1909-2656                         | Anonymous, 1826–1870                         | CC0           | [Commons](https://commons.wikimedia.org/wiki/File:Vignet_met_weegschaal,_RP-P-1909-2656.jpg) |
+| `microscope`       | Compound microscope, from René Descartes, _La Dioptrique_                | Anonymous, 1637                              | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Compound_microscope_as_rendered_by_artist_in_Descartes_%22La_Dioptrique%22_LCCN2006690473.jpg) |
+| `printer`          | The printer, from _Das Ständebuch_                                       | Jost Amman, 1568                             | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Buchdrucker-1568.png) |
+| `turk`             | The Turk, from _Ueber den Schachspieler des Herrn von Kempelen und dessen Nachbildung_ | Joseph Racknitz, 1789          | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Racknitz_-_The_Turk_1.jpg) |
+| `bartisch`         | Portrait of Georg Bartisch, _Ophthalmodouleia_, leaf 4v                  | Georg Bartisch, 1583                         | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Bartisch-04v.jpg) |
+| `magnolia`         | _Magnolia grandiflora_, from F. A. Michaux, _The North American Sylva_   | Pierre-Joseph Redouté (drawing), 1819        | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:NAS-051_Magnolia_grandiflora.png) |
+| `phonograph-use`   | The phonograph in use, from Th. du Moncel, _Le téléphone, le microphone et le phonographe_ | Charles Laplante, 1880     | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Fig_99_Phonograph_in_use.jpg) |
+| `phonograph-sheet` | A phonograph sheet, from the same book                                   | Charles Laplante, 1880                       | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Fig_103_A_phonograph_sheet.jpg) |
+| `vaucanson`        | Vaucanson's automata, drawing, Paris Musées                              | Hubert-François Gravelot, 1747–1773          | CC0           | [Commons](https://commons.wikimedia.org/wiki/File:Les_automates_de_Vaucanson._D.4099.jpg) |
+| `mical`            | The speaking heads of abbé Mical, reproduced in _Histoire des jouets_    | Anonymous, 18th century                      | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:T%C3%AAtes_parlantes_de_l%27abb%C3%A9_Mical.jpg) |
+| `barometer`        | Man beside a barometer, Rijksmuseum RP-P-1911-3423                       | Anonymous, 1748–1877                         | CC0           | [Commons](https://commons.wikimedia.org/wiki/File:Man_bij_een_barometer,_RP-P-1911-3423.jpg) |
+| `pigeons`          | Pigeon messengers, _Harper's New Monthly Magazine_ no. 275               | Anonymous, 1873                              | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Pigeon_Messengers_(Harper%27s_Engraving).png) |
+| `balloons`         | Air-balloons, plate CCCXIV of an unidentified publication; Library of Congress | A. Bell (engraver), 1784               | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Air-balloons_LCCN2002722692.tif) |
+| `icarus`           | Icarus, from _The Four Disgracers_, Rijksmuseum RP-P-OB-10.363           | Hendrick Goltzius after Cornelis van Haarlem, 1588 | CC0     | [Commons](https://commons.wikimedia.org/wiki/File:Icarus_De_vier_vallers_(serietitel),_RP-P-OB-10.363.jpg) |
+| `albinus-text`     | Page of text, _Tabulae sceleti et musculorum corporis humani_            | Bernhard Siegfried Albinus, 1747             | CC0           | [Commons](https://commons.wikimedia.org/wiki/File:Tabulae_sceleti_et_musculorum_corporis_humani,_Albinus,_1747,_KU_Leuven_Libraries,_Maurits_Sabbe_Library,_P_Plano_155,_Folio_015v.jpg) |
 
 ## Fonts
 
-Bricolage Grotesque, Instrument Sans and Shantell Sans are served through `next/font` under
-the SIL Open Font License 1.1.
+Newsreader and Instrument Sans are served through `next/font` under the SIL Open Font
+License 1.1.
 
 ## Components
 
-No third-party component is vendored at the moment. When one is added, its folder under
-`src/components/vendor`, its project, its licence and any local change are listed here; see
-[ADR 0002](docs/adr/0002-vendored-third-party-components.md).
+Copied with the shadcn CLI into `src/components/vendor/<library>/` and wrapped from our own
+code; see [ADR 0002](docs/adr/0002-vendored-third-party-components.md).
+
+| File                                   | Project                                                        | Licence              | Used for                                   |
+| -------------------------------------- | -------------------------------------------------------------- | -------------------- | ------------------------------------------ |
+| `motion-primitives/image-comparison`   | [Motion Primitives](https://github.com/ibelick/motion-primitives) | MIT               | The reading line of the first collage      |
+| `kokonutui/marker-text`                | [KokonutUI](https://github.com/kokonut-labs/kokonutui)          | MIT                  | The hand-drawn underline of the headline   |
+| `react-bits/StickerPeel`               | [React Bits](https://github.com/DavidHDev/react-bits)           | MIT + Commons Clause | The loose cut-outs on the desk             |
+| `react-bits/HalftoneReveal`            | React Bits                                                      | MIT + Commons Clause | The plate of each project file             |
+| `react-bits/Noise`                     | React Bits                                                      | MIT + Commons Clause | The grain of the footer                    |
+| `react-bits/Ribbons`                   | React Bits                                                      | MIT + Commons Clause | The ribbons of the not-found page          |
+
+### Local changes
+
+- `react-bits/StickerPeel.tsx`, in the effect's clean-up: the WebGL context is released only
+  when the canvas has left the document (`if (!canvas.isConnected)`), as the same library's
+  `Ribbons` does. Without it, React's development double mount left every sticker blank.

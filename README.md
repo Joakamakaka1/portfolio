@@ -2,14 +2,16 @@
 
 Personal portfolio of a full stack AI developer (LLMs, agents and quality evaluation).
 
-The home page is a desk with a notebook on it. The notebook opens and its pages turn: who
-I am, what I do, where I have worked and what I have built. Each project also has a page of
-its own. The look is a paper collage of public-domain engravings over flat colour.
+The first screen is a collage: a plate of an octopus read as an agent and its tools. Under
+it a notebook lies on a desk; it opens, its pages turn and it tells the story in ten short
+pages. Each project also has a file of its own. Every picture is a paper collage built from
+public-domain prints.
 
-| Route               | What it is                                                         |
-| ------------------- | ------------------------------------------------------------------ |
-| `/`                 | The desk and the notebook. `/#proyectos` opens it at that page.     |
-| `/proyectos/[slug]` | The file of one project: problem, approach, figures and stack.      |
+| Route               | What it is                                                           |
+| ------------------- | -------------------------------------------------------------------- |
+| `/`                 | The collage and the notebook. `/#proyectos` opens it at that page.   |
+| `/proyectos/[slug]` | The file of one project: problem, approach, figures and stack.       |
+| `/creditos`         | The prints the collages are cut from, with their sources.            |
 
 ## Run it locally
 
@@ -29,7 +31,7 @@ Then open <http://localhost:3000>.
 | `pnpm check`     | Everything below except the end-to-end tests, in order          |
 | `pnpm lint`      | Biome: lint, format and import order                            |
 | `pnpm typecheck` | Generates route types and runs `tsc`                            |
-| `pnpm test`      | Unit tests (Vitest)                                             |
+| `pnpm test`      | Unit tests (Vitest), the collage kit included                   |
 | `pnpm build`     | Production build                                                |
 | `pnpm test:e2e`  | Playwright on desktop and mobile, with axe accessibility checks |
 
@@ -44,17 +46,19 @@ secret scan; see [.github/workflows/ci.yml](.github/workflows/ci.yml).
 ```
 src/
   app/                  Routes (App Router)
-    _components/        The pages of the notebook and what lies on the desk
+    _components/        The first screen and the pages of the notebook
     proyectos/[slug]/   The file of each project
-  assets/artwork/       Engravings, already processed (see "Artwork")
+    creditos/           Credits of the prints
   content/              The site content as typed data, validated with Zod
   features/
     notebook/           The notebook: a pure model, the component and its styles
     prefs/              Theme preference, applied before first paint
   components/
-    collage/            Engravings as components
+    collage/            A collage as a stack of pieces that answers the pointer
     site/               Header, footer and small shared pieces
-scripts/artwork.mjs     Downloads and prepares the engravings
+    vendor/             Third-party components, as they came
+scripts/collage/        Builds the pieces of every collage
+public/collage/         The built pieces
 e2e/                    End-to-end and accessibility tests
 docs/adr/               Architecture decision records
 ```
@@ -64,7 +68,34 @@ docs/adr/               Architecture decision records
 Everything the site says lives in [`src/content`](src/content). Each file is parsed against
 its schema when imported, so a typo or a missing field fails the build instead of reaching
 the page. Project claims come from each project's own repository; nothing is added that
-the repository does not back.
+the repository does not back. The notebook is written in [`story.ts`](src/content/story.ts):
+a title and a few lines per page.
+
+### Collages
+
+A collage is not a drawing: it is built from scans of old prints, the way one is made by
+hand.
+
+- [`scripts/collage/kit.mjs`](scripts/collage/kit.mjs) holds the operations: cut a figure
+  out of its page, tear an edge, age a sheet of paper, reprint in one or two inks, screen
+  through dots, slip the rows. They are plain functions over pixels, seeded and unit tested.
+- A recipe per collage ([`scripts/collage/recipes`](scripts/collage/recipes)) turns prints
+  into pieces, written to `public/collage`.
+- Where each piece sits is content: [`src/content/collages.json`](src/content/collages.json).
+- [`Collage`](src/components/collage/Collage.tsx) stacks the pieces as real layers, so they
+  overlap, cast shadows and drift apart by depth when the pointer moves. To a screen reader
+  it is one picture with one description.
+
+```bash
+pnpm collage                  # build every piece (downloads what is missing)
+pnpm collage hero             # only that collage
+pnpm collage hero --preview   # also flatten it to a PNG, to look at it
+```
+
+The prints are public-domain works from Wikimedia Commons, recorded in
+[`src/content/artwork.json`](src/content/artwork.json) with title, author, year, licence and
+source file. Originals stay in a cache outside the repository; only the built pieces are
+committed.
 
 ### The notebook
 
@@ -75,35 +106,23 @@ the repository does not back.
 - `Notebook.tsx` decides which faces are showing. The pages themselves are server
   components passed in as props, so the content is static HTML.
 - `notebook.css` draws it. From 1024px up it is a book whose leaves turn in 3D, two pages
-  at a time; below that the same markup is a horizontal pager, one page at a time.
+  at a time; below that the same markup is a horizontal pager. In both, an index lays every
+  page out as a grid, and the pages travel there with a view transition.
 
 A page sets its font size from its own width and everything inside it is sized in `em`, so
-a page scales like a picture: content that fits at one size fits at every size.
+a page scales like a picture: the thumbnails of the index are the real pages, smaller.
 
 The page on show is mirrored in the URL fragment, which makes every page linkable. Pages
 that are not showing are `inert` in book mode, and without JavaScript all of them are still
-in the document. See [ADR 0007](docs/adr/0007-observation-notebook.md).
-
-### Artwork
-
-The engravings are public-domain works from Wikimedia Commons.
-[`src/content/artwork.json`](src/content/artwork.json) records each one (title, author,
-year, licence and source file), and the last page of the notebook and
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) are written from it.
-
-```bash
-pnpm artwork           # download what is missing and rebuild every image
-pnpm artwork cygnus    # only that entry
-```
-
-The script keeps the originals in a cache folder outside the repository and writes small
-WebP files to `src/assets/artwork`. Line engravings become black ink on a transparent
-background, so they can sit on any colour block; coloured plates are only cropped.
+in the document. See ADRs [0007](docs/adr/0007-observation-notebook.md) and
+[0008](docs/adr/0008-natural-history-collage.md).
 
 ### Third-party components
 
-No third-party component is in use right now. The policy for adding one (copy it into
-`src/components/vendor`, leave it as it came, record its licence) is in
+Components from React Bits, Motion Primitives and KokonutUI are copied into
+`src/components/vendor`, left as they came and wrapped from our own code. What each one is
+used for, its licence and the one local change are in
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md); the policy is
 [ADR 0002](docs/adr/0002-vendored-third-party-components.md).
 
 ## Decisions
@@ -114,10 +133,11 @@ No third-party component is in use right now. The policy for adding one (copy it
 - [0004 · Site in Spanish, repository in English](docs/adr/0004-site-in-spanish.md)
 - [0005 · Two prototypes before choosing a direction](docs/adr/0005-two-prototypes-before-choosing.md) (superseded by 0007)
 - [0006 · A scripted agent before a real one](docs/adr/0006-scripted-agent-first.md) (superseded by 0007)
-- [0007 · The site is an observation notebook](docs/adr/0007-observation-notebook.md)
+- [0007 · The site is an observation notebook](docs/adr/0007-observation-notebook.md) (look superseded by 0008)
+- [0008 · Layered collage, a plain type pair and a notebook that tells a story](docs/adr/0008-natural-history-collage.md)
 
 ## Licence
 
 Source code under the [MIT License](LICENSE). The written content and the personal data are
-not: they are © Joaquín Castro Salas, all rights reserved. The engravings are in the public
-domain.
+not: they are © Joaquín Castro Salas, all rights reserved. The prints the collages are made
+from are in the public domain.
