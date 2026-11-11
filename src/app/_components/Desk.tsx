@@ -56,7 +56,7 @@ export function DeskPieces() {
       </Piece>
       <Star className="absolute top-[16%] left-[27vw] size-[2.2vw] text-vermilion" />
       <Star className="absolute right-[7vw] top-[30%] size-[1.5vw] text-cobalt dark:text-star" />
-      <Star className="absolute bottom-[20%] left-[4vw] size-[1.3vw] text-leaf" />
+      <Star className="absolute top-[72%] left-[30vw] size-[1.3vw] text-leaf" />
     </div>
   );
 }
