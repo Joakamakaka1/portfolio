@@ -1,0 +1,391 @@
+/*
+ * The notebook.
+ *
+ * Everything inside a page is sized in `em`, and the page sets its font-size
+ * from its own width (--nb-unit). A page therefore scales like a picture: if
+ * the content fits at one size, it fits at every size.
+ *
+ * From 1024px up it is a book: leaves turn around the spine in 3D and two
+ * faces are visible. Below that the same markup becomes a horizontal pager,
+ * one face at a time, and pages grow as tall as their content.
+ */
+
+.nb {
+  --nb-page-w: min(100vw - 2.5rem, 25rem);
+  --nb-page-h: calc(var(--nb-page-w) * 1.42);
+  --nb-unit: calc(var(--nb-page-w) / 23);
+  --nb-board: calc(var(--nb-unit) * 0.55);
+  --nb-turn: 850ms;
+  --nb-ease: cubic-bezier(0.3, 0.1, 0.2, 1);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.nb-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+/* Pager (default). */
+.nb-book {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 0.5rem calc((100% - var(--nb-page-w)) / 2) 1.75rem;
+}
+
+.nb-leaf {
+  display: contents;
+}
+
+.nb-face {
+  position: relative;
+  display: flex;
+  flex: 0 0 var(--nb-page-w);
+  flex-direction: column;
+  min-height: var(--nb-page-h);
+  scroll-snap-align: center;
+  /* A link to a page should bring the notebook into view, not hide its tabs. */
+  scroll-margin-top: 5rem;
+  overflow: hidden;
+  border-radius: 0.4em;
+  font-size: var(--nb-unit);
+  color: var(--ink);
+  background-color: var(--cobalt);
+  box-shadow:
+    0 0.1em 0.2em rgb(20 22 30 / 0.3),
+    0 1em 2em rgb(20 22 30 / 0.22);
+}
+
+/* A sheet of squared paper. */
+.nb-sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 1em;
+  min-height: 0;
+  overflow: hidden;
+  padding: 2.1em 1.9em 2.4em;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 1.6em 1.6em;
+  background-position: -1px -1px;
+}
+
+.nb-folio {
+  position: absolute;
+  bottom: 0.7em;
+  font-family: var(--font-hand);
+  font-size: 0.95em;
+  color: var(--ink-soft);
+}
+.nb-front .nb-folio {
+  right: 1.4em;
+}
+.nb-back .nb-folio {
+  left: 1.4em;
+}
+
+/* The cover's click target fills the whole face. */
+.nb-open {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+.nb-open:focus-visible {
+  outline-offset: -6px;
+  outline-color: var(--star);
+}
+
+/* Bookmarks. */
+.nb-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  order: -1;
+  padding-inline: 1rem;
+}
+.nb-tab {
+  padding: 0.45rem 0.8rem;
+  border-radius: 0.35rem;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ink);
+  background-color: var(--nb-tab, var(--star));
+  box-shadow: 0 1px 2px rgb(20 22 30 / 0.25);
+}
+.nb-tab[aria-current="true"] {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* Controls. */
+.nb-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-display);
+}
+.nb-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  padding-inline: 0.9rem;
+  border-radius: 999px;
+  font-weight: 600;
+  color: var(--primary-foreground);
+  background-color: var(--primary);
+  cursor: pointer;
+  transition: transform 150ms var(--nb-ease);
+}
+.nb-button:hover:not([aria-disabled="true"]) {
+  transform: translateY(-1px);
+}
+.nb-button[aria-disabled="true"] {
+  opacity: 0.35;
+  cursor: default;
+}
+.nb-count {
+  min-width: 5.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Book. */
+@media (min-width: 1024px) {
+  .nb {
+    --nb-page-w: clamp(19rem, min(36vw, 54svh), 31rem);
+    --nb-unit: calc(var(--nb-page-w) / 27);
+  }
+
+  .nb-stage {
+    display: block;
+    width: calc(var(--nb-page-w) * 2);
+    height: var(--nb-page-h);
+    transition: transform var(--nb-turn) var(--nb-ease);
+  }
+  /* Closed, only the right half exists: bring the cover to the middle. */
+  .nb[data-open="0"] .nb-stage {
+    transform: translateX(-25%) rotate(-2.5deg);
+  }
+
+  .nb-book {
+    position: absolute;
+    inset: 0;
+    display: block;
+    overflow: visible;
+    padding: 0;
+    perspective: 2800px;
+  }
+  /* Shadow of the whole book on the desk. */
+  .nb-book::before {
+    content: "";
+    position: absolute;
+    inset: 2% 1% 0 50%;
+    border-radius: 0.5em;
+    box-shadow: 0 1.6em 2.6em rgb(20 22 30 / 0.4);
+    transition: inset var(--nb-turn) var(--nb-ease);
+  }
+  .nb:not([data-open="0"]) .nb-book::before {
+    inset: 2% 1% 0 1%;
+  }
+
+  .nb-leaf {
+    position: absolute;
+    display: block;
+    top: var(--nb-board);
+    left: 50%;
+    width: calc(50% - var(--nb-board));
+    height: calc(100% - 2 * var(--nb-board));
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    z-index: calc(var(--nb-leaves) - var(--nb-i));
+    transition:
+      transform var(--nb-turn) var(--nb-ease),
+      z-index 0s calc(var(--nb-turn) / 2);
+  }
+  .nb-leaf[data-flipped="true"] {
+    transform: rotateY(-180deg);
+    z-index: var(--nb-i);
+  }
+  /* The first and last leaves are the boards, a little larger than the paper. */
+  .nb-leaf[data-board="true"] {
+    top: 0;
+    width: 50%;
+    height: 100%;
+  }
+
+  .nb-face {
+    position: absolute;
+    inset: 0;
+    min-height: 0;
+    /* The book sits in the first screen: following a link to a page must not move the desk. */
+    scroll-margin-top: 100vh;
+    backface-visibility: hidden;
+    border-radius: 0 0.5em 0.5em 0;
+    box-shadow: none;
+    background-color: var(--paper);
+  }
+  .nb-back {
+    transform: rotateY(180deg);
+    border-radius: 0.5em 0 0 0.5em;
+  }
+  .nb-leaf[data-board="true"] > .nb-face {
+    background-color: var(--cobalt);
+    padding: var(--nb-board) var(--nb-board) var(--nb-board) 0;
+  }
+  .nb-leaf[data-board="true"] > .nb-back {
+    padding: var(--nb-board) 0 var(--nb-board) var(--nb-board);
+  }
+  .nb-leaf[data-board="true"] > .nb-cover {
+    padding: 0;
+  }
+
+  /* The paper darkens towards the spine. */
+  .nb-sheet::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgb(20 22 30 / 0.16), transparent 9%);
+  }
+  .nb-back .nb-sheet::after {
+    background: linear-gradient(270deg, rgb(20 22 30 / 0.16), transparent 9%);
+  }
+
+  .nb-tabs {
+    position: absolute;
+    top: 9%;
+    left: 100%;
+    z-index: -1;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 0.45em;
+    order: 0;
+    padding: 0;
+    font-size: var(--nb-unit);
+  }
+  .nb-stage {
+    isolation: isolate;
+  }
+  .nb-tab {
+    margin-left: -0.5em;
+    padding: 0.6em 0.8em 0.6em 1.1em;
+    border-radius: 0 0.4em 0.4em 0;
+    font-size: 0.95em;
+    white-space: nowrap;
+    transition: margin-left 150ms var(--nb-ease);
+  }
+  .nb-tab:hover,
+  .nb-tab[aria-current="true"] {
+    margin-left: 0;
+  }
+}
+
+/* Type on paper. */
+.nb-title {
+  font-family: var(--font-hand);
+  font-size: 2.3em;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.nb-note {
+  font-family: var(--font-hand);
+  font-size: 1.22em;
+  line-height: 1.311;
+}
+.nb-print {
+  font-family: var(--font-display);
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+.nb-mark {
+  background-image: linear-gradient(
+    transparent 58%,
+    var(--nb-mark, var(--star)) 58%,
+    var(--nb-mark, var(--star)) 92%,
+    transparent 92%
+  );
+}
+.nb-link {
+  color: var(--cobalt);
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
+}
+.nb-link:hover {
+  text-decoration-thickness: 0.14em;
+}
+
+/* A rubber stamp. */
+.nb-stamp {
+  display: inline-block;
+  padding: 0.38em 0.6em 0.32em;
+  border: 0.17em solid currentColor;
+  border-radius: 0.3em;
+  font-family: var(--font-display);
+  font-size: 0.9em;
+  font-stretch: 75%;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-5deg);
+}
+
+/* A strip from a label maker. */
+.nb-strip {
+  display: inline-block;
+  padding: 0.3em 0.5em;
+  border-radius: 0.12em;
+  font-family: var(--font-display);
+  font-size: 0.78em;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--paper);
+  background-color: var(--ink);
+}
+
+/* Translucent tape holding a clipping. */
+.nb-tape {
+  position: absolute;
+  width: 4.2em;
+  height: 1.25em;
+  background-color: rgb(255 210 63 / 0.62);
+  box-shadow: 0 0.05em 0.1em rgb(20 22 30 / 0.18);
+}
+
+/* The cover: cobalt cloth. */
+.nb-cover-art {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  background-color: var(--cobalt);
+  background-image:
+    repeating-linear-gradient(0deg, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgb(10 16 60 / 0.1) 0 1px, transparent 1px 3px);
+}

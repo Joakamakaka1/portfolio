@@ -1,16 +1,20 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "../features/notebook/notebook.css";
 
 @custom-variant dark (&:is(.dark *));
 
 /*
  * Design tokens.
- * Names follow the shadcn convention so third-party components under
- * src/components/vendor pick them up. Brand tokens (brand, navy, star, violet,
- * magenta, cyan) are ours and come from the reference board: the orange of the
- * "Color Drop #21" poster, the navy of the "Tokyo" type poster and the neon
- * ribbons of the cosmic illustrations.
+ *
+ * The site is a desk with a paper notebook on it, so there are two surfaces:
+ * the desk (background / foreground, which change with the theme) and paper
+ * (paper / ink, which do not: paper stays paper at night). The inks come from
+ * the collage references: vermilion, cobalt and leaf green over khaki.
+ *
+ * The shadcn names are kept so components added under src/components/vendor
+ * pick the palette up.
  */
 @theme inline {
   --color-background: var(--background);
@@ -32,20 +36,24 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  --color-brand: var(--brand);
-  --color-brand-foreground: var(--brand-foreground);
-  --color-navy: var(--navy);
+  --color-paper: var(--paper);
+  --color-paper-aged: var(--paper-aged);
+  --color-grid: var(--grid);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-vermilion: var(--vermilion);
+  --color-vermilion-ink: var(--vermilion-ink);
+  --color-cobalt: var(--cobalt);
+  --color-leaf: var(--leaf);
+  --color-leaf-ink: var(--leaf-ink);
   --color-star: var(--star);
-  --color-violet: var(--violet);
-  --color-magenta: var(--magenta);
-  --color-cyan: var(--cyan);
-  --color-ok: var(--ok);
+  --color-mint: var(--mint);
+  --color-peach: var(--peach);
+  --color-sky: var(--sky);
 
   --font-sans: var(--font-body);
-  --font-heading: var(--font-display);
   --font-display: var(--font-display);
-  --font-pixel: var(--font-pixel);
-  --font-mono: var(--font-code);
+  --font-hand: var(--font-hand);
 
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
@@ -57,100 +65,63 @@
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.5rem;
 
-  --background: #eef0f3;
-  --foreground: #14161b;
-  --card: #ffffff;
-  --card-foreground: #14161b;
-  --popover: #ffffff;
-  --popover-foreground: #14161b;
-  --primary: #14161b;
-  --primary-foreground: #ffffff;
-  --secondary: #e3e6ea;
-  --secondary-foreground: #14161b;
-  --muted: #e3e6ea;
-  --muted-foreground: #555b66;
-  --accent: #e3e6ea;
-  --accent-foreground: #14161b;
-  --destructive: #c8281e;
-  --border: #d3d7de;
-  --input: #c4c9d2;
-  --ring: #f44612;
-
-  --brand: #f44612;
-  --brand-foreground: #14161b;
-  --navy: #283845;
+  /* Paper and inks: the same in both themes. */
+  --paper: #fbfaf4;
+  --paper-aged: #efe7d2;
+  --grid: #c9d3e6;
+  --ink: #1b1f2e;
+  --ink-soft: #4d5266;
+  --vermilion: #f0432a;
+  --vermilion-ink: #c92d16;
+  --cobalt: #2a4fd0;
+  --leaf: #2f8f57;
+  --leaf-ink: #1e7040;
   --star: #ffd23f;
-  --violet: #5a3df0;
-  --magenta: #e0218a;
-  --cyan: #0e8fb5;
-  --ok: #12805c;
+  --mint: #cfe8c9;
+  --peach: #f6cdb0;
+  --sky: #cbd6f7;
+
+  /* The desk by day. */
+  --background: #e3e0d0;
+  --foreground: #15171c;
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: #15171c;
+  --primary-foreground: #fbfaf4;
+  --secondary: #d5d1bd;
+  --secondary-foreground: #15171c;
+  --muted: #d5d1bd;
+  --muted-foreground: #4f5146;
+  --accent: #d5d1bd;
+  --accent-foreground: #15171c;
+  --destructive: #c92d16;
+  --border: #bdb8a0;
+  --input: #a9a48b;
+  --ring: #2a4fd0;
+  --link: #1f3fb5;
 }
 
 .dark {
-  --background: #0d0f14;
-  --foreground: #eceef2;
-  --card: #161920;
-  --card-foreground: #eceef2;
-  --popover: #161920;
-  --popover-foreground: #eceef2;
-  --primary: #eceef2;
-  --primary-foreground: #14161b;
-  --secondary: #1e222b;
-  --secondary-foreground: #eceef2;
-  --muted: #1e222b;
-  --muted-foreground: #a1a8b4;
-  --accent: #1e222b;
-  --accent-foreground: #eceef2;
-  --destructive: #ff6b5e;
-  --border: #2a2f3a;
-  --input: #3a404d;
-  --ring: #ff6a3d;
-
-  --brand: #ff6a3d;
-  --brand-foreground: #14161b;
-  --navy: #9db4c7;
-  --star: #ffd23f;
-  --violet: #9d8bff;
-  --magenta: #ff5cb0;
-  --cyan: #4fd4f5;
-  --ok: #3ed6a0;
-}
-
-/* The cosmos prototype repaints the same tokens instead of adding new ones. */
-.cosmos {
-  --background: #f1effb;
-  --foreground: #15103a;
-  --card: #ffffff;
-  --card-foreground: #15103a;
-  --muted: #e4e0f6;
-  --muted-foreground: #544d7a;
-  --secondary: #e4e0f6;
-  --secondary-foreground: #15103a;
-  --accent: #e4e0f6;
-  --accent-foreground: #15103a;
-  --border: #cfc8ee;
-  --primary: #15103a;
-  --primary-foreground: #ffffff;
-  --ring: #6b4eff;
-}
-
-.dark .cosmos {
-  --background: #0a0820;
-  --foreground: #f1eeff;
-  --card: #141033;
-  --card-foreground: #f1eeff;
-  --muted: #1c1745;
-  --muted-foreground: #b3abd9;
-  --secondary: #1c1745;
-  --secondary-foreground: #f1eeff;
-  --accent: #1c1745;
-  --accent-foreground: #f1eeff;
-  --border: #2e2766;
-  --primary: #f1eeff;
-  --primary-foreground: #15103a;
-  --ring: #9d8bff;
+  /* The desk by night; the paper keeps its colour. */
+  --background: #2e3450;
+  --foreground: #eef0f6;
+  --primary: #eef0f6;
+  --primary-foreground: #1b1f2e;
+  --secondary: #3a4163;
+  --secondary-foreground: #eef0f6;
+  --muted: #3a4163;
+  --muted-foreground: #c1c7dc;
+  --accent: #3a4163;
+  --accent-foreground: #eef0f6;
+  --destructive: #ff8a78;
+  --border: #505880;
+  --input: #5f6890;
+  --ring: #ffd23f;
+  --link: #b9c8ff;
 }
 
 @layer base {
@@ -169,62 +140,110 @@
     outline-offset: 2px;
   }
   ::selection {
-    background: var(--brand);
-    color: var(--brand-foreground);
+    background: var(--star);
+    color: var(--ink);
   }
+}
+
+/* Fine grain over the desk, so the flat colour reads as a surface. */
+.desk-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+}
+
+/* A pasted clipping: slightly aged paper lifted off the page. */
+.clipping {
+  background-color: var(--paper-aged);
+  box-shadow:
+    0 0.06em 0.12em rgb(20 22 30 / 0.25),
+    0 0.5em 1.2em rgb(20 22 30 / 0.16);
 }
 
 /*
- * Mascot variants. Both are always rendered and the inactive one is hidden
- * here, so the server HTML never depends on a preference stored in the browser.
+ * The desk. While the notebook is closed the introduction sits beside it; once
+ * it opens, the introduction steps aside and the loose pieces slide to the
+ * edges to leave the middle to the book.
  */
-.mascot-soft {
-  display: none;
+.desk-piece {
+  transform: rotate(var(--r, 0deg));
+  transition: transform 850ms cubic-bezier(0.3, 0.1, 0.2, 1);
 }
-html[data-mascot="soft"] .mascot-soft {
-  display: contents;
+.desk-comet {
+  transition:
+    transform 850ms cubic-bezier(0.3, 0.1, 0.2, 1),
+    opacity 600ms ease;
 }
-html[data-mascot="soft"] .mascot-pixel {
-  display: none;
+.desk-night {
+  background-image:
+    radial-gradient(1px 1px at 12% 30%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 30% 12%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 44% 70%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 58% 22%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 60%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 86% 34%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 95% 78%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 5% 84%, #fff 50%, transparent 51%);
 }
 
-@keyframes mascot-blink {
-  0%,
-  92%,
-  100% {
-    transform: scaleY(1);
+@media (min-width: 1024px) {
+  .desk-intro {
+    transform: translateY(-50%);
+    transition:
+      opacity 400ms ease,
+      transform 850ms cubic-bezier(0.3, 0.1, 0.2, 1),
+      visibility 0s;
   }
-  95% {
-    transform: scaleY(0.1);
+  .desk .nb[data-open="0"] .nb-stage {
+    transform: translateX(calc(-25% + 19vw)) rotate(-2.5deg);
   }
-}
-@keyframes mascot-scan {
-  0%,
-  100% {
-    transform: translateX(-0.6px);
+  .desk .nb-controls {
+    transition: transform 850ms cubic-bezier(0.3, 0.1, 0.2, 1);
   }
-  50% {
-    transform: translateX(0.6px);
+  .desk .nb[data-open="0"] .nb-controls {
+    transform: translateX(19vw);
   }
-}
-@keyframes mascot-dot {
-  0%,
-  100% {
-    opacity: 0.25;
+  .desk:has(.nb:not([data-open="0"])) .desk-intro {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-3rem, -50%);
+    transition:
+      opacity 300ms ease,
+      transform 850ms cubic-bezier(0.3, 0.1, 0.2, 1),
+      visibility 0s 300ms;
   }
-  50% {
-    opacity: 1;
+  .desk:has(.nb:not([data-open="0"])) .desk-piece {
+    transform: translate(var(--dx, 0), var(--dy, 0)) rotate(var(--r, 0deg));
   }
-}
-@keyframes mascot-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
+  .desk:has(.nb:not([data-open="0"])) .desk-comet {
+    opacity: 0.55;
+    transform: translate(-6vw, -3vh);
   }
 }
+
+/* The printed landscape of the footer. */
+.site-footer {
+  --f-sky: #7fb0e4;
+  --f-cloud: #fdf2de;
+  --f-hill: #a3b66c;
+  --f-bush: #f0683c;
+  --f-tree: #4f86cf;
+  color: var(--ink);
+  background-color: var(--f-sky);
+}
+.site-footer .footer-stars {
+  fill: transparent;
+}
+.dark .site-footer {
+  --f-sky: #1b2036;
+  --f-cloud: #353d5c;
+  --f-hill: #27433a;
+  --f-bush: #7c3527;
+  --f-tree: #10142a;
+  color: #eef0f6;
+}
+.dark .site-footer .footer-stars {
+  fill: #fff;
+}
+
 @keyframes star-twinkle {
   0%,
   100% {
@@ -241,15 +260,18 @@ html[data-mascot="soft"] .mascot-pixel {
   html {
     scroll-behavior: auto;
   }
-  /* These must win over the inline animations of third-party components. */
   *,
   *::before,
   *::after {
-    /* biome-ignore lint/complexity/noImportantStyles: has to override inline styles */
+    /* biome-ignore lint/complexity/noImportantStyles: has to override every animation on the page */
     animation-duration: 0.01ms !important;
-    /* biome-ignore lint/complexity/noImportantStyles: has to override inline styles */
+    /* biome-ignore lint/complexity/noImportantStyles: has to override every animation on the page */
     animation-iteration-count: 1 !important;
-    /* biome-ignore lint/complexity/noImportantStyles: has to override inline styles */
+    /* biome-ignore lint/complexity/noImportantStyles: has to override every transition on the page */
     transition-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: a delayed step must not outlive its transition */
+    transition-delay: 0s !important;
+    /* biome-ignore lint/complexity/noImportantStyles: has to override the pager's smooth scrolling */
+    scroll-behavior: auto !important;
   }
 }

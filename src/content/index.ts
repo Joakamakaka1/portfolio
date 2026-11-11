@@ -19,4 +19,5 @@ export function getProject(slug: string) {
   return projects.find((project) => project.slug === slug);
 }
 
+export * from "./artwork";
 export * from "./schema";

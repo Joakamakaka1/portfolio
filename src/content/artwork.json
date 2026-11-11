@@ -1,0 +1,230 @@
+[
+  {
+    "id": "cygnus",
+    "file": "Johannes Hevelius - Cygnus.jpg",
+    "title": "Cygnus",
+    "author": "Johannes Hevelius",
+    "year": "1690",
+    "work": "Firmamentum Sobiescianum sive Uranographia",
+    "license": "Public domain",
+    "render": {
+      "mode": "plate",
+      "width": 760,
+      "crop": {
+        "left": 0.32,
+        "top": 0.05,
+        "width": 0.5,
+        "height": 0.76
+      }
+    }
+  },
+  {
+    "id": "lyra",
+    "file": "Johannes Hevelius - Lyra.jpg",
+    "title": "Lyra",
+    "author": "Johannes Hevelius",
+    "year": "1690",
+    "work": "Firmamentum Sobiescianum sive Uranographia",
+    "license": "Public domain",
+    "render": {
+      "mode": "plate",
+      "width": 620,
+      "crop": {
+        "left": 0.33,
+        "top": 0.33,
+        "width": 0.38,
+        "height": 0.47
+      }
+    }
+  },
+  {
+    "id": "ursa-minor",
+    "file": "Johannes Hevelius - Ursa Minor.jpg",
+    "title": "Ursa Minor",
+    "author": "Johannes Hevelius",
+    "year": "1690",
+    "work": "Firmamentum Sobiescianum sive Uranographia",
+    "license": "Public domain",
+    "render": {
+      "mode": "plate",
+      "width": 620,
+      "crop": {
+        "left": 0.2,
+        "top": 0.47,
+        "width": 0.4,
+        "height": 0.33
+      }
+    }
+  },
+  {
+    "id": "flammarion",
+    "file": "FlammarionWoodcut.jpg",
+    "title": "El punto donde el cielo y la Tierra se tocan",
+    "author": "Anónimo",
+    "year": "1888",
+    "work": "Camille Flammarion, L'atmosphère: météorologie populaire",
+    "license": "Public domain",
+    "render": {
+      "mode": "ink",
+      "width": 860,
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 1,
+        "height": 0.9
+      },
+      "paper": 0.7,
+      "ink": 0.25
+    }
+  },
+  {
+    "id": "moon",
+    "file": "Hevelius Map of the Moon 1647.jpg",
+    "title": "Mapa de la Luna",
+    "author": "Johannes Hevelius",
+    "year": "1647",
+    "work": "Selenographia",
+    "license": "Public domain",
+    "render": {
+      "mode": "ink",
+      "width": 760,
+      "crop": {
+        "left": 0.085,
+        "top": 0.03,
+        "width": 0.845,
+        "height": 0.955
+      },
+      "paper": 0.72,
+      "ink": 0.25
+    }
+  },
+  {
+    "id": "turk",
+    "file": "Racknitz - The Turk 1.jpg",
+    "title": "El Turco, autómata ajedrecista",
+    "author": "Joseph Friedrich zu Racknitz",
+    "year": "1789",
+    "work": "Ueber den Schachspieler des Herrn von Kempelen und dessen Nachbildung",
+    "license": "Public domain",
+    "render": {
+      "mode": "plate",
+      "width": 820,
+      "crop": {
+        "left": 0.03,
+        "top": 0.03,
+        "width": 0.94,
+        "height": 0.94
+      }
+    }
+  },
+  {
+    "id": "microscope",
+    "file": "Compound microscope as rendered by artist in Descartes \"La Dioptrique\" LCCN2006690473.jpg",
+    "title": "Observador ante un microscopio compuesto",
+    "author": "Anónimo",
+    "year": "1637",
+    "work": "René Descartes, La Dioptrique",
+    "license": "Public domain",
+    "render": {
+      "mode": "ink",
+      "width": 560,
+      "crop": {
+        "left": 0.26,
+        "top": 0.11,
+        "width": 0.54,
+        "height": 0.43
+      },
+      "paper": 0.7,
+      "ink": 0.25
+    }
+  },
+  {
+    "id": "jupiter",
+    "file": "Trouvelot - Jupiter - 1880.jpg",
+    "title": "Júpiter, observado el 1 de noviembre de 1880",
+    "author": "Étienne Léopold Trouvelot",
+    "year": "1881",
+    "work": "The Trouvelot Astronomical Drawings",
+    "license": "Public domain",
+    "render": {
+      "mode": "plate",
+      "width": 820,
+      "crop": {
+        "left": 0.066,
+        "top": 0.07,
+        "width": 0.868,
+        "height": 0.835
+      }
+    }
+  },
+  {
+    "id": "pigeons",
+    "file": "Pigeon Messengers (Harper's Engraving).png",
+    "title": "Palomas mensajeras",
+    "author": "Anónimo",
+    "year": "1873",
+    "work": "Harper's New Monthly Magazine",
+    "license": "Public domain",
+    "render": {
+      "mode": "ink",
+      "width": 820,
+      "paper": 0.7,
+      "ink": 0.25
+    }
+  },
+  {
+    "id": "printer",
+    "file": "Buchdrucker-1568.png",
+    "title": "El impresor",
+    "author": "Jost Amman",
+    "year": "1568",
+    "work": "Das Ständebuch",
+    "license": "Public domain",
+    "render": {
+      "mode": "ink",
+      "width": 640,
+      "paper": 0.6,
+      "ink": 0.3
+    }
+  },
+  {
+    "id": "barometer",
+    "file": "Man bij een barometer, RP-P-1911-3423.jpg",
+    "title": "Hombre junto a un barómetro",
+    "author": "Anónimo (Rijksmuseum)",
+    "year": "1748–1877",
+    "work": "Rijksmuseum, RP-P-1911-3423",
+    "license": "CC0",
+    "render": {
+      "mode": "plate",
+      "width": 560,
+      "crop": {
+        "left": 0.17,
+        "top": 0.195,
+        "width": 0.67,
+        "height": 0.58
+      }
+    }
+  },
+  {
+    "id": "scales",
+    "file": "Vignet met weegschaal, RP-P-1909-2656.jpg",
+    "title": "Viñeta con balanza",
+    "author": "Anónimo (Rijksmuseum)",
+    "year": "1826–1870",
+    "work": "Rijksmuseum, RP-P-1909-2656",
+    "license": "CC0",
+    "render": {
+      "mode": "ink",
+      "width": 520,
+      "crop": {
+        "left": 0.31,
+        "top": 0.18,
+        "width": 0.35,
+        "height": 0.53
+      },
+      "paper": 0.72,
+      "ink": 0.2
+    }
+  }
+]

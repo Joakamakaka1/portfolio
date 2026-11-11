@@ -1,33 +1,27 @@
 import type { Metadata } from "next";
-import {
-  Bricolage_Grotesque,
-  Instrument_Sans,
-  JetBrains_Mono,
-  Pixelify_Sans,
-} from "next/font/google";
+import { Bricolage_Grotesque, Instrument_Sans, Shantell_Sans } from "next/font/google";
 import { profile } from "@/content";
 import { PREFS_INLINE_SCRIPT } from "@/features/prefs/prefs";
 import "./globals.css";
 
+// Printed matter: the name, labels, stamps and the interface.
 const display = Bricolage_Grotesque({
   variable: "--font-display",
   subsets: ["latin"],
   axes: ["opsz", "wdth"],
 });
 
+// Long text outside the notebook.
 const body = Instrument_Sans({
   variable: "--font-body",
   subsets: ["latin"],
 });
 
-const pixel = Pixelify_Sans({
-  variable: "--font-pixel",
+// Handwriting: everything written in the notebook.
+const hand = Shantell_Sans({
+  variable: "--font-hand",
   subsets: ["latin"],
-});
-
-const code = JetBrains_Mono({
-  variable: "--font-code",
-  subsets: ["latin"],
+  axes: ["BNCE", "INFM"],
 });
 
 export const metadata: Metadata = {
@@ -42,11 +36,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es"
-      className={`${display.variable} ${body.variable} ${pixel.variable} ${code.variable} h-full antialiased`}
+      className={`${display.variable} ${body.variable} ${hand.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
-        {/* Applies the stored theme and mascot before the first paint (no flash). */}
+        {/* Applies the stored theme before the first paint (no flash). */}
         <script
           // biome-ignore lint/security/noDangerouslySetInnerHtml: static string defined in prefs.ts
           dangerouslySetInnerHTML={{ __html: PREFS_INLINE_SCRIPT }}
