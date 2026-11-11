@@ -1,6 +1,7 @@
 # 0006 · A scripted agent before a real one
 
-Status: accepted (2026-11-11)
+Status: superseded by [0007](0007-observation-notebook.md) (2026-11-11). Prototype A was not
+chosen, so the scripted agent was removed with it.
 
 ## Context
 

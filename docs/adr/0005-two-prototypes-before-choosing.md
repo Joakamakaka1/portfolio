@@ -1,6 +1,7 @@
 # 0005 · Two prototypes before choosing a direction
 
-Status: accepted (2026-11-11). Will be superseded by the ADR that records the choice.
+Status: superseded by [0007](0007-observation-notebook.md) (2026-11-11). Prototype B was
+chosen and both prototypes were removed.
 
 ## Context
 

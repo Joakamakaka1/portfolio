@@ -28,6 +28,28 @@ Personal portfolio of Joaquín Castro Salas. Read [README.md](README.md) for the
 - Work for Air Europa is mentioned as in `src/content/profile.ts`: the employer and the
   role, never internal projects or the tools used there.
 
+### The notebook
+
+- Read [ADR 0007](docs/adr/0007-observation-notebook.md) before changing
+  `src/features/notebook`. The rules of the book live in `book.ts`, without React; add a
+  unit test when you change them.
+- Inside a notebook page (`src/app/_components/pages.tsx`) size everything in `em`. A page
+  takes its font size from its own width; `rem` and `px` break that.
+- A page does not scroll and does not grow in book mode. After changing its copy, open it
+  at 1280×720 and check that nothing is clipped; split the page if it no longer fits.
+- The number of faces after the cover stays even.
+- Links to a notebook page from the home page are plain `<a href="#id">`, not `<Link>`:
+  the notebook follows the browser's `hashchange`.
+
+### Artwork
+
+- Pictures are public-domain works only. Each one has an entry in
+  `src/content/artwork.json` with its Commons file, author, year and licence, and a row in
+  `THIRD_PARTY_NOTICES.md`.
+- Do not commit originals. Add the entry, run `pnpm artwork <id>` and commit the file it
+  writes to `src/assets/artwork`, then add it to `src/components/collage/files.ts`.
+- There is no mascot. Do not add one, or a photo of the owner, without being asked.
+
 ### Third-party components
 
 - Files under `src/components/vendor` are copied from other projects. Do not edit, lint or
@@ -43,8 +65,8 @@ Personal portfolio of Joaquín Castro Salas. Read [README.md](README.md) for the
   `useReducedMotion` in `src/features/prefs/use-prefs.ts`.
 - WebGL and canvas effects load with `next/dynamic` and `ssr: false`, and never carry
   content.
-- Theme and mascot are attributes on `<html>` set before first paint
-  (`src/features/prefs/prefs.ts`). Do not read them from `localStorage` during render.
+- The theme is a class on `<html>` set before first paint
+  (`src/features/prefs/prefs.ts`). Do not read it from `localStorage` during render.
 
 ### Checks
 

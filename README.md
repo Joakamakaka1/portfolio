@@ -2,17 +2,14 @@
 
 Personal portfolio of a full stack AI developer (LLMs, agents and quality evaluation).
 
-> **Status: choosing a direction.** Two prototypes with the same content and a different
-> visual concept live side by side. One of them will become the site; the other will be
-> removed. See [ADR 0005](docs/adr/0005-two-prototypes-before-choosing.md).
+The home page is a desk with a notebook on it. The notebook opens and its pages turn: who
+I am, what I do, where I have worked and what I have built. Each project also has a page of
+its own. The look is a paper collage of public-domain engravings over flat colour.
 
-| Route           | Prototype               | Idea                                                                 |
-| --------------- | ----------------------- | -------------------------------------------------------------------- |
-| `/proto/agente` | A · Agent workspace     | The site behaves like an agent UI: ask, watch the steps, get an answer with citations. |
-| `/proto/cosmos` | B · Illustrated cosmos  | Large type over a live background, with projects as a collection of covers. |
-
-Both share a floating bar to switch prototype, theme (light or dark) and mascot (pixel art
-or soft vector).
+| Route               | What it is                                                         |
+| ------------------- | ------------------------------------------------------------------ |
+| `/`                 | The desk and the notebook. `/#proyectos` opens it at that page.     |
+| `/proyectos/[slug]` | The file of one project: problem, approach, figures and stack.      |
 
 ## Run it locally
 
@@ -27,14 +24,14 @@ Then open <http://localhost:3000>.
 
 ## Checks
 
-| Command         | What it does                                                    |
-| --------------- | --------------------------------------------------------------- |
-| `pnpm check`    | Everything below except the end-to-end tests, in order           |
-| `pnpm lint`     | Biome: lint, format and import order                            |
-| `pnpm typecheck`| Generates route types and runs `tsc`                            |
-| `pnpm test`     | Unit tests (Vitest)                                             |
-| `pnpm build`    | Production build                                                |
-| `pnpm test:e2e` | Playwright on desktop and mobile, with axe accessibility checks |
+| Command          | What it does                                                    |
+| ---------------- | --------------------------------------------------------------- |
+| `pnpm check`     | Everything below except the end-to-end tests, in order          |
+| `pnpm lint`      | Biome: lint, format and import order                            |
+| `pnpm typecheck` | Generates route types and runs `tsc`                            |
+| `pnpm test`      | Unit tests (Vitest)                                             |
+| `pnpm build`     | Production build                                                |
+| `pnpm test:e2e`  | Playwright on desktop and mobile, with axe accessibility checks |
 
 `pnpm test:e2e` needs the browser once: `pnpm exec playwright install chromium`.
 
@@ -46,19 +43,18 @@ secret scan; see [.github/workflows/ci.yml](.github/workflows/ci.yml).
 
 ```
 src/
-  app/                  Routes (App Router). Prototype-only components sit next to their page.
-    proto/agente/       Prototype A
-    proto/cosmos/       Prototype B
+  app/                  Routes (App Router)
+    _components/        The pages of the notebook and what lies on the desk
+    proyectos/[slug]/   The file of each project
+  assets/artwork/       Engravings, already processed (see "Artwork")
   content/              The site content as typed data, validated with Zod
   features/
-    agent/              Scripted agent: question matching and step-by-step runs
-    cosmos/             Generated SVG artwork (project covers, mascot badge)
-    prefs/              Theme and mascot preferences, applied before first paint
+    notebook/           The notebook: a pure model, the component and its styles
+    prefs/              Theme preference, applied before first paint
   components/
-    mascot/             The mascot in two drawings, with shared states
-    proto/              Pieces that exist only while the prototypes are compared
-    site/               Small shared pieces
-    vendor/             Third-party components, copied in and left as they came
+    collage/            Engravings as components
+    site/               Header, footer and small shared pieces
+scripts/artwork.mjs     Downloads and prepares the engravings
 e2e/                    End-to-end and accessibility tests
 docs/adr/               Architecture decision records
 ```
@@ -70,19 +66,44 @@ its schema when imported, so a typo or a missing field fails the build instead o
 the page. Project claims come from each project's own repository; nothing is added that
 the repository does not back.
 
-### The agent is scripted
+### The notebook
 
-Prototype A answers from a script, not from a model, and says so on the page. The script
-engine in [`src/features/agent`](src/features/agent) defines the contract (question in,
-steps reported, answer with cited sources) that a real LLM backend will have to meet. See
-[ADR 0006](docs/adr/0006-scripted-agent-first.md).
+[`src/features/notebook`](src/features/notebook) has three parts:
+
+- `book.ts` is the model, with no React and no DOM: faces, leaves, which faces show for a
+  given number of turned leaves, and which face a URL fragment names. It is unit tested.
+- `Notebook.tsx` decides which faces are showing. The pages themselves are server
+  components passed in as props, so the content is static HTML.
+- `notebook.css` draws it. From 1024px up it is a book whose leaves turn in 3D, two pages
+  at a time; below that the same markup is a horizontal pager, one page at a time.
+
+A page sets its font size from its own width and everything inside it is sized in `em`, so
+a page scales like a picture: content that fits at one size fits at every size.
+
+The page on show is mirrored in the URL fragment, which makes every page linkable. Pages
+that are not showing are `inert` in book mode, and without JavaScript all of them are still
+in the document. See [ADR 0007](docs/adr/0007-observation-notebook.md).
+
+### Artwork
+
+The engravings are public-domain works from Wikimedia Commons.
+[`src/content/artwork.json`](src/content/artwork.json) records each one (title, author,
+year, licence and source file), and the last page of the notebook and
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) are written from it.
+
+```bash
+pnpm artwork           # download what is missing and rebuild every image
+pnpm artwork cygnus    # only that entry
+```
+
+The script keeps the originals in a cache folder outside the repository and writes small
+WebP files to `src/assets/artwork`. Line engravings become black ink on a transparent
+background, so they can sit on any colour block; coloured plates are only cropped.
 
 ### Third-party components
 
-Components from React Bits, Animate UI, Motion Primitives and KokonutUI are copied into
-[`src/components/vendor`](src/components/vendor) through the shadcn CLI and are not edited,
-linted or formatted. The few local changes, and every licence, are listed in
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). See
+No third-party component is in use right now. The policy for adding one (copy it into
+`src/components/vendor`, leave it as it came, record its licence) is in
 [ADR 0002](docs/adr/0002-vendored-third-party-components.md).
 
 ## Decisions
@@ -91,10 +112,12 @@ linted or formatted. The few local changes, and every licence, are listed in
 - [0002 · Third-party components are vendored](docs/adr/0002-vendored-third-party-components.md)
 - [0003 · Content is typed data](docs/adr/0003-content-as-typed-data.md)
 - [0004 · Site in Spanish, repository in English](docs/adr/0004-site-in-spanish.md)
-- [0005 · Two prototypes before choosing a direction](docs/adr/0005-two-prototypes-before-choosing.md)
-- [0006 · A scripted agent before a real one](docs/adr/0006-scripted-agent-first.md)
+- [0005 · Two prototypes before choosing a direction](docs/adr/0005-two-prototypes-before-choosing.md) (superseded by 0007)
+- [0006 · A scripted agent before a real one](docs/adr/0006-scripted-agent-first.md) (superseded by 0007)
+- [0007 · The site is an observation notebook](docs/adr/0007-observation-notebook.md)
 
 ## Licence
 
-Source code under the [MIT License](LICENSE). The written content, the mascot and the
-personal data are not: they are © Joaquín Castro Salas, all rights reserved.
+Source code under the [MIT License](LICENSE). The written content and the personal data are
+not: they are © Joaquín Castro Salas, all rights reserved. The engravings are in the public
+domain.

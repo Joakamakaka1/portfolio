@@ -20,7 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Scope: the MIT License above covers the source code only. The written content,
-the mascot artwork and the personal data under src/content are (c) Joaquín
-Castro Salas, all rights reserved. Third-party components keep their own
-licenses; see THIRD_PARTY_NOTICES.md.
+Scope: the MIT License above covers the source code only. The written content
+and the personal data under src/content are (c) Joaquín Castro Salas, all
+rights reserved. The engravings under src/assets/artwork are public-domain
+works, and third-party components keep their own licenses; see
+THIRD_PARTY_NOTICES.md.
