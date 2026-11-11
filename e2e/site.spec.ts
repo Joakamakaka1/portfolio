@@ -39,10 +39,11 @@ async function expectNoHorizontalScroll(page: Page) {
 }
 
 const PAGES = [
-  { path: "/", name: "desk with the closed notebook" },
+  { path: "/", name: "first screen and the closed notebook" },
   { path: "/#proyectos", name: "open notebook" },
   { path: "/#contacto", name: "last pages of the notebook" },
   { path: "/proyectos/cancelaciones-hotel", name: "project file" },
+  { path: "/creditos", name: "credits" },
 ];
 
 for (const { path, name } of PAGES) {
@@ -72,6 +73,13 @@ for (const { path, name } of PAGES) {
   });
 }
 
+test.describe("first screen", () => {
+  test("shows the collage as one picture with a text alternative", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByRole("img", { name: /^Lámina I\./ })).toBeVisible();
+  });
+});
+
 test.describe("notebook", () => {
   test("opens from the cover and keeps the page in the URL", async ({ page }) => {
     await page.goto("/");
@@ -79,14 +87,14 @@ test.describe("notebook", () => {
     await page.getByRole("button", { name: "Abrir el cuaderno" }).click();
     await expect(page).toHaveURL(/#quien-soy$/);
     await expectShowing(page, "quien-soy");
-    await expect(page.getByRole("heading", { name: "Quién soy" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /^Me llamo Joaquín/ })).toBeVisible();
   });
 
   test("turns pages forwards and backwards", async ({ page }) => {
     await page.goto("/#quien-soy");
     await expectShowing(page, "quien-soy");
     // A book turns a leaf (two pages); the pager moves one page.
-    const next = isBook(page) ? "que-hago" : "formacion";
+    const next = isBook(page) ? "ahora" : "el-principio";
     await page.getByRole("button", { name: "Página siguiente" }).click();
     await expect(page).toHaveURL(new RegExp(`#${next}$`));
     await expectShowing(page, next);
@@ -99,9 +107,9 @@ test.describe("notebook", () => {
     await page.goto("/#quien-soy");
     await page.getByRole("button", { name: "Página siguiente" }).focus();
     await page.keyboard.press("ArrowRight");
-    await expect(page).toHaveURL(new RegExp(`#${isBook(page) ? "que-hago" : "formacion"}$`));
+    await expect(page).toHaveURL(new RegExp(`#${isBook(page) ? "ahora" : "el-principio"}$`));
     await page.keyboard.press("End");
-    await expectShowing(page, "laminas");
+    await expectShowing(page, "contacto");
     await page.keyboard.press("Home");
     await expectShowing(page, "tapa");
     await expect(page).not.toHaveURL(/#/);
@@ -110,29 +118,25 @@ test.describe("notebook", () => {
   test("opens at the page named in the URL", async ({ page }) => {
     await page.goto("/#proyectos");
     await expectShowing(page, "proyectos");
-    await expect(
-      page
-        .getByRole("navigation", { name: "Marcadores del cuaderno" })
-        .getByRole("link", { name: "Proyectos" }),
-    ).toHaveAttribute("aria-current", "true");
   });
 
-  test("bookmarks jump to their page", async ({ page }) => {
-    await page.goto("/");
-    await page
-      .getByRole("navigation", { name: "Marcadores del cuaderno" })
-      .getByRole("link", { name: "Trayectoria" })
-      .click();
-    await expect(page).toHaveURL(/#trayectoria$/);
-    await expectShowing(page, "trayectoria");
+  test("lays every page out in the index and opens the one picked", async ({ page }) => {
+    await page.goto("/#quien-soy");
+    await page.getByRole("button", { name: "Ver todas las páginas" }).click();
+    const picks = page.getByRole("button", { name: /^Ir a la (tapa|página)/ });
+    await expect(picks).toHaveCount(11);
+    await page.getByRole("button", { name: "Ir a la página 6: Cronista" }).click();
+    await expect(page).toHaveURL(/#cronista$/);
+    await expectShowing(page, "cronista");
+    await expect(picks).toHaveCount(0);
   });
 
   test("announces the pages on show", async ({ page }) => {
     await page.goto("/");
     await page.getByRole("button", { name: "Abrir el cuaderno" }).click();
     const announced = isBook(page)
-      ? "Páginas 1 y 2 de 12: Quién soy y Formación."
-      : "Página 1 de 12: Quién soy.";
+      ? "Páginas 1 y 2 de 10: Quién soy y El principio."
+      : "Página 1 de 10: Quién soy.";
     await expect(page.getByText(announced)).toBeAttached();
   });
 
@@ -151,8 +155,13 @@ test.describe("without JavaScript", () => {
 
   test("lays every page out, one after another", async ({ page }) => {
     await page.goto("/#contacto");
-    for (const title of ["Quién soy", "Qué hago", "Trayectoria", "Proyectos", "Hablemos"]) {
-      await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
+    for (const title of [
+      /^Me llamo Joaquín/,
+      /^Primero aprendí/,
+      "Cronista",
+      "Dónde encontrarme.",
+    ]) {
+      await expect(page.getByRole("heading", { name: title })).toBeVisible();
     }
     await expect(page.locator("#contacto")).toBeInViewport();
     await expectNoHorizontalScroll(page);
@@ -163,7 +172,7 @@ test.describe("projects", () => {
   test("goes from the notebook to a project file and back", async ({ page }) => {
     await page.goto("/#cronista");
     await expectShowing(page, "cronista");
-    await page.getByRole("link", { name: "Abrir la ficha de Cronista" }).click();
+    await page.locator("#cronista").getByRole("link", { name: "Leer la ficha" }).click();
     await expect(page).toHaveURL(/\/proyectos\/cronista$/);
     await expect(page.getByRole("heading", { level: 1, name: "Cronista" })).toBeVisible();
     await page.getByRole("link", { name: "Volver al cuaderno" }).click();
@@ -174,13 +183,24 @@ test.describe("projects", () => {
   test("never links to the private repository", async ({ page }) => {
     await page.goto("/proyectos/twochi");
     const file = page.getByRole("article");
-    await expect(file.getByText("Repositorio privado")).toBeVisible();
+    await expect(file.getByText("El repositorio es privado.")).toBeVisible();
     await expect(file.locator('a[href*="github.com"]')).toHaveCount(0);
   });
 
   test("answers an unknown project with the not-found page", async ({ page }) => {
     await page.goto("/proyectos/no-existe");
-    await expect(page.getByText("Esta página no está en el cuaderno")).toBeVisible();
+    await expect(page.getByText("Esta página se ha caído del cuaderno.")).toBeVisible();
+  });
+});
+
+test.describe("credits", () => {
+  test("links every print to its source", async ({ page }) => {
+    await page.goto("/creditos");
+    const sources = page
+      .getByRole("main")
+      .locator('a[href^="https://commons.wikimedia.org/wiki/File:"]');
+    expect(await sources.count()).toBeGreaterThan(10);
+    await expect(page.getByRole("link", { name: "Octopus macropus" })).toBeVisible();
   });
 });
 
