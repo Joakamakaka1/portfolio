@@ -1,48 +1,57 @@
 import Link from "next/link";
 import { profile } from "@/content";
+import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 
-const LINKS = [
-  { hash: "quien-soy", label: "Historia" },
-  { hash: "proyectos", label: "Proyectos" },
-  { hash: "contacto", label: "Contacto" },
-];
-
 /**
- * Site header. On the home page the links are plain fragments, so the browser
- * fires `hashchange` and the notebook turns to that page; elsewhere they
- * navigate to the home page first.
+ * Site header. "Historia" and "Contacto" are places on the home page, so there
+ * they are plain fragments and elsewhere they lead back to it; "Proyectos" is
+ * a page of its own.
  */
-export function SiteHeader({ home = false }: { home?: boolean }) {
-  const brand = profile.name;
+export function SiteHeader({
+  home = false,
+  wide = false,
+}: {
+  home?: boolean;
+  /** Runs edge to edge instead of keeping to the column of the text pages. */
+  wide?: boolean;
+}) {
   const brandClass = "font-semibold tracking-[-0.01em]";
+  const linkClass = "underline-offset-4 hover:underline max-sm:hidden";
 
   return (
     <header
       id="top"
-      className="relative z-20 mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-5 py-5 sm:px-8"
+      className={cn(
+        "relative z-20 flex w-full items-center justify-between gap-4 py-5",
+        wide ? "px-[clamp(1rem,2.2vw,2rem)]" : "mx-auto max-w-6xl px-5 sm:px-8",
+      )}
     >
       {home ? (
         <a href="#top" className={brandClass}>
-          {brand}
+          {profile.name}
         </a>
       ) : (
         <Link href="/" className={brandClass}>
-          {brand}
+          {profile.name}
         </Link>
       )}
       <nav aria-label="Principal" className="flex items-center gap-4 text-[0.95rem] sm:gap-7">
-        {LINKS.map((link) =>
-          home ? (
-            <a key={link.hash} href={`#${link.hash}`} className="hover:underline max-sm:hidden">
-              {link.label}
-            </a>
-          ) : (
-            <Link key={link.hash} href={`/#${link.hash}`} className="hover:underline max-sm:hidden">
-              {link.label}
-            </Link>
-          ),
+        {home ? (
+          <a href="#historia" className={linkClass}>
+            Historia
+          </a>
+        ) : (
+          <Link href="/#historia" className={linkClass}>
+            Historia
+          </Link>
         )}
+        <Link href="/proyectos" className="underline-offset-4 hover:underline">
+          Proyectos
+        </Link>
+        <a href="#contacto" className={linkClass}>
+          Contacto
+        </a>
         <ThemeToggle />
       </nav>
     </header>

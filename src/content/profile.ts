@@ -7,7 +7,6 @@ export const profileData: z.input<typeof profileSchema> = {
   role: "Desarrollador Full Stack IA",
   focus: "LLMs, agentes y evaluación de calidad",
   headline: "Construyo aplicaciones con modelos de lenguaje y compruebo que funcionan.",
-  headlineMark: "compruebo que funcionan",
   plate: "Lámina I. Un agente y sus herramientas: mirar de cerca, medir y dejarlo escrito.",
   notes: [
     {

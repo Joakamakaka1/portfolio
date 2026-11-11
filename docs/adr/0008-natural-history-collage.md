@@ -1,8 +1,9 @@
 # 0008 · Layered collage, a plain type pair and a notebook that tells a story
 
-Status: accepted (2026-11-11). Supersedes the look and the content plan of
-[0007](0007-observation-notebook.md); what 0007 says about how the notebook is built still
-holds.
+Status: accepted (2026-11-11). Amended by [0009](0009-scroll-story-and-projects-board.md),
+which replaces the notebook with a story told by the scroll and drops two of the components
+listed below. Supersedes the look and the content plan of
+[0007](0007-observation-notebook.md).
 
 ## Context
 

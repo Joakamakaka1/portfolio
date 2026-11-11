@@ -1,0 +1,224 @@
+/*
+ * The projects board: columns side by side, divided by hairlines that run the
+ * whole height. Opening a project lets its column take all the room while the
+ * others close; the card of the column keeps its size, so nothing in it jumps.
+ */
+.board {
+  position: relative;
+  display: flex;
+  flex: 1;
+  /* Lets the cards measure the board itself (cqw), however wide a column gets. */
+  container-type: inline-size;
+}
+
+.board-col {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: clip;
+  border-left: 1px solid var(--border);
+  transition:
+    flex-grow 700ms cubic-bezier(0.3, 0.1, 0.2, 1),
+    opacity 350ms ease,
+    border-color 350ms ease;
+}
+.board-col:last-child {
+  border-right: 1px solid var(--border);
+}
+.board-col[data-away="true"] {
+  flex-grow: 0;
+  opacity: 0;
+  border-width: 0;
+}
+
+/* The card: number, name, picture. Always one column wide. */
+.board-card {
+  display: flex;
+  flex: 0 0 calc(100cqw / var(--board-count));
+  flex-direction: column;
+  min-width: 0;
+  padding: clamp(6rem, 22svh, 12.5rem) clamp(1rem, 2.2vw, 2rem) 3rem;
+  color: inherit;
+  transition: background-color 250ms ease;
+}
+.board:not([data-open]) .board-card:hover,
+.board:not([data-open]) .board-card:focus-visible {
+  background-color: color-mix(in srgb, var(--foreground) 4%, transparent);
+}
+.board-card:focus-visible {
+  outline-offset: -3px;
+}
+.board-card[aria-current="page"] {
+  cursor: default;
+}
+
+.board-number {
+  font-family: var(--font-serif);
+  font-size: clamp(4.25rem, 7.4vw, 7rem);
+  font-weight: 400;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--vermilion);
+}
+.board-name {
+  display: flex;
+  align-items: flex-end;
+  /* Two lines, with the name sitting on the lower one. */
+  min-height: 2.5em;
+  margin-top: clamp(2rem, 9svh, 5.5rem);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+.board-kind {
+  /* Room for a name of two lines, so the pictures of every column line up. */
+  min-height: 2.6em;
+  margin-top: 0.15rem;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  color: var(--muted-foreground);
+}
+/* A frame of one shape for collages of any shape. */
+.board-art {
+  display: grid;
+  place-items: center start;
+  aspect-ratio: 3 / 2;
+  margin-top: 1rem;
+  container-type: size;
+  transition: translate 450ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.board-art .collage {
+  width: min(100cqw, 100cqh * var(--ratio));
+}
+.board:not([data-open]) .board-card:hover .board-art {
+  translate: 0 -0.35rem;
+}
+.board-status {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
+}
+
+/* The project itself, beside its card. */
+.board-detail {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: clamp(1.5rem, 5svh, 3.5rem) clamp(1.25rem, 3vw, 3.5rem) 5rem;
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity 500ms ease 320ms,
+    translate 700ms cubic-bezier(0.2, 0.7, 0.2, 1) 320ms;
+}
+@starting-style {
+  .board-detail {
+    opacity: 0;
+    translate: 2rem 0;
+  }
+}
+.board-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: clamp(1.5rem, 5svh, 3rem);
+  padding: 0.6rem 1.1rem 0.6rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+.board-back:hover {
+  border-color: var(--foreground);
+  background-color: color-mix(in srgb, var(--foreground) 5%, transparent);
+}
+
+/* The label of the page, where the first column starts. */
+.board-label {
+  position: absolute;
+  top: clamp(1.25rem, 4svh, 2.5rem);
+  left: clamp(1rem, 2.2vw, 2rem);
+  z-index: 1;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Narrow screens: the columns become rows. */
+@media (max-width: 899px) {
+  .board {
+    flex-direction: column;
+  }
+  .board-col {
+    flex: none;
+    flex-direction: column;
+    border-top: 1px solid var(--border);
+    border-left: 0;
+    transition: none;
+  }
+  .board-col:last-child {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .board-col[data-away="true"] {
+    display: none;
+  }
+  .board-card {
+    display: grid;
+    flex: none;
+    grid-template-columns: auto minmax(0, 1fr) minmax(0, 7.5rem);
+    grid-template-areas:
+      "number name art"
+      "number kind art"
+      "number status art";
+    align-items: center;
+    column-gap: 1rem;
+    padding: 1.5rem 1.25rem;
+  }
+  .board-number {
+    grid-area: number;
+    font-size: 3.5rem;
+  }
+  .board-name {
+    grid-area: name;
+    align-self: end;
+    min-height: 0;
+    margin-top: 0;
+  }
+  .board-kind {
+    grid-area: kind;
+    min-height: 0;
+  }
+  .board-status {
+    grid-area: status;
+    align-self: start;
+    margin-top: 0.35rem;
+  }
+  .board-art {
+    grid-area: art;
+    margin-top: 0;
+  }
+  .board-detail {
+    flex: none;
+    padding: 0.5rem 1.25rem 4rem;
+  }
+  .board-label {
+    position: static;
+    padding: 0.25rem 1.25rem 1rem;
+  }
+}
+
+/* Wide screens, a project open: its card stays in view while the project scrolls. */
+@media (min-width: 900px) {
+  .board-col[data-open="true"] .board-card {
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+  }
+  .board-detail {
+    border-left: 1px solid var(--border);
+  }
+}

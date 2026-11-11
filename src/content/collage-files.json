@@ -19,10 +19,6 @@
     "w": 1900,
     "h": 300
   },
-  "footer/hill-near": {
-    "w": 1900,
-    "h": 260
-  },
   "footer/sun": {
     "w": 320,
     "h": 320
@@ -83,91 +79,83 @@
     "w": 897,
     "h": 897
   },
-  "notebook/config-block": {
+  "story/config-block": {
     "w": 300,
     "h": 155
   },
-  "notebook/config-plate": {
+  "story/config-plate": {
     "w": 620,
     "h": 533
   },
-  "notebook/contact-plate": {
-    "w": 680,
-    "h": 442
-  },
-  "notebook/cover-marble": {
-    "w": 720,
-    "h": 1118
-  },
-  "notebook/cronista-block": {
+  "story/cronista-block": {
     "w": 280,
     "h": 269
   },
-  "notebook/cronista-plate": {
+  "story/cronista-plate": {
     "w": 620,
     "h": 582
   },
-  "notebook/hotel-block": {
+  "story/hotel-block": {
     "w": 260,
     "h": 290
   },
-  "notebook/hotel-plate": {
+  "story/hotel-plate": {
     "w": 640,
     "h": 541
   },
-  "notebook/measure-block": {
+  "story/measure-block": {
     "w": 260,
     "h": 270
   },
-  "notebook/measure-figure": {
+  "story/measure-figure": {
     "w": 654,
     "h": 669
   },
-  "notebook/paper-blue": {
+  "story/paper-blue": {
     "w": 420,
     "h": 240
   },
-  "notebook/paper-red": {
+  "story/paper-red": {
     "w": 420,
     "h": 300
   },
-  "notebook/projects-block": {
+  "story/projects-block": {
     "w": 220,
     "h": 365
   },
-  "notebook/projects-plate": {
+  "story/projects-plate": {
     "w": 680,
     "h": 550
   },
-  "notebook/seed-block": {
+  "story/seed-block": {
     "w": 280,
     "h": 327
   },
-  "notebook/seed-page": {
+  "story/seed-page": {
     "w": 660,
     "h": 563
   },
-  "notebook/speak-figure": {
+  "story/speak-figure": {
     "w": 734,
     "h": 550
   },
-  "notebook/text-a": {
+  "story/text-a": {
     "w": 420,
     "h": 292
   },
-  "notebook/text-b": {
+  "story/text-b": {
     "w": 380,
     "h": 232
   },
-  "notebook/twochi-figure": {
+  "story/twochi-figure": {
     "w": 716,
     "h": 493
   },
-  "notebook/who-block": {
+  "story/who-block": {
     "w": 300,
     "h": 261
   },
-  "notebook/who-figure": {
+  "story/who-figure": {
     "w": 640,
     "h": 507
   }

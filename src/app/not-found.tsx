@@ -21,7 +21,7 @@ export default function NotFound() {
       <main className="mx-auto grid w-full max-w-6xl flex-1 items-center gap-x-14 gap-y-8 px-5 pb-24 sm:px-8 lg:grid-cols-2">
         <div className="flex flex-col items-start gap-6">
           <h1 className="max-w-[12ch] font-serif text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.02] tracking-[-0.02em] text-balance">
-            Esta página se ha caído del cuaderno.
+            Esta página se ha caído.
           </h1>
           <p className="max-w-[40ch] font-serif text-[1.25rem] leading-[1.45]">
             Puede que el enlace esté mal escrito o que la página ya no exista.

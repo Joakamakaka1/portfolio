@@ -6,7 +6,7 @@ import {
   experienceSchema,
   profileSchema,
   projectSchema,
-  storyPageSchema,
+  storyStepSchema,
   studySchema,
 } from "./schema";
 import { storyData } from "./story";
@@ -17,12 +17,7 @@ export const projects = z.array(projectSchema).parse(projectsData);
 export const experience = z.array(experienceSchema).parse(experienceData);
 export const studies = z.array(studySchema).parse(studiesData);
 
-export const story = z
-  .array(storyPageSchema)
-  .refine((pages) => pages.every((page) => !page.project || getProject(page.project)), {
-    message: "A story page points at a project that does not exist",
-  })
-  .parse(storyData);
+export const story = z.array(storyStepSchema).parse(storyData);
 
 export function getProject(slug: string) {
   return projects.find((project) => project.slug === slug);

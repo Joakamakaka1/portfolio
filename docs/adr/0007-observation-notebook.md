@@ -1,6 +1,8 @@
 # 0007 · The site is an observation notebook
 
-Status: its look and content plan are superseded by [0008](0008-natural-history-collage.md); the notebook mechanics below still hold. Accepted 2026-11-11. Supersedes [0005](0005-two-prototypes-before-choosing.md) and
+Status: superseded by [0009](0009-scroll-story-and-projects-board.md), which removes the
+notebook; its look had already been replaced by [0008](0008-natural-history-collage.md).
+Accepted 2026-11-11. Superseded [0005](0005-two-prototypes-before-choosing.md) and
 [0006](0006-scripted-agent-first.md).
 
 ## Context

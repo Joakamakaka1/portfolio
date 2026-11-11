@@ -1,7 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "../features/notebook/notebook.css";
+@import "../features/story/story.css";
+@import "../features/projects/board.css";
 @import "../components/collage/collage.css";
 
 @custom-variant dark (&:is(.dark *));
@@ -9,9 +10,10 @@
 /*
  * Design tokens.
  *
- * Three surfaces. The wall (background / foreground) is where the collages
- * hang and it follows the theme. The desk is the slate-blue band the notebook
- * lies on. Paper (paper / ink) never changes: paper stays paper at night.
+ * Two surfaces. The wall (background / foreground) is where everything hangs
+ * and it follows the theme. Paper (paper / ink) never changes: paper stays
+ * paper at night. Text printed straight on the wall in a colour uses the wall
+ * inks, which change with the theme to stay readable.
  *
  * Colour is ink, not decoration: vermilion, cobalt and leaf green are used the
  * way a two-colour print uses them, in small areas over aged paper.
@@ -40,9 +42,9 @@
   --color-ring: var(--ring);
   --color-link: var(--link);
 
-  --color-desk: var(--desk);
-  --color-desk-foreground: var(--desk-foreground);
-  --color-desk-muted: var(--desk-muted);
+  --color-wall-vermilion: var(--wall-vermilion);
+  --color-wall-cobalt: var(--wall-cobalt);
+  --color-wall-leaf: var(--wall-leaf);
   --color-paper: var(--paper);
   --color-paper-aged: var(--paper-aged);
   --color-grid: var(--grid);
@@ -87,10 +89,10 @@
   --peach: #f5cdb4;
   --sky: #cdd8f5;
 
-  /* The desk under the notebook. */
-  --desk: #3c4466;
-  --desk-foreground: #f1f2f7;
-  --desk-muted: #c3c8dc;
+  /* Coloured text on the wall. */
+  --wall-vermilion: #bf321c;
+  --wall-cobalt: #2b55b5;
+  --wall-leaf: #2a7343;
 
   /* The wall by day. */
   --background: #f4f2ec;
@@ -116,7 +118,9 @@
 
 .dark {
   /* The wall by night; paper keeps its colour. */
-  --desk: #333a5a;
+  --wall-vermilion: #ff8f7c;
+  --wall-cobalt: #a9bcff;
+  --wall-leaf: #84d39e;
   --background: #1b1e2b;
   --foreground: #eceae3;
   --primary: #eceae3;

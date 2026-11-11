@@ -1,0 +1,123 @@
+/*
+ * The story: a stage pinned to the screen and a track that is only there to be
+ * scrolled. Both share one grid cell, so the track gives the section its
+ * height and the stage sticks inside it for as long as the track lasts.
+ */
+.story {
+  position: relative;
+  display: grid;
+}
+
+.story-track {
+  grid-area: 1 / 1;
+  pointer-events: none;
+}
+/* How much scroll a step takes before the next one comes on. */
+.story-mark {
+  height: 85svh;
+}
+/* The last one is a full screen, so the stage is still whole when its anchor is reached. */
+.story-mark:last-child {
+  height: 100svh;
+}
+
+.story-stage {
+  position: sticky;
+  top: 0;
+  grid-area: 1 / 1;
+  display: grid;
+  height: 100svh;
+  overflow: clip;
+}
+
+/* Every step lies in the same place; one is on show. */
+.story-step {
+  grid-area: 1 / 1;
+  display: grid;
+  align-items: center;
+  opacity: 0;
+  translate: 0 1.5rem;
+  pointer-events: none;
+  transition:
+    opacity 450ms ease,
+    translate 650ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+/* Steps already told leave upwards; steps to come wait below. */
+.story-step[data-past="true"] {
+  translate: 0 -1.5rem;
+}
+.story-step[data-active="true"] {
+  opacity: 1;
+  translate: 0 0;
+  pointer-events: auto;
+  transition-delay: 120ms;
+}
+
+/* The collage of a step is laid down again each time the step comes on. */
+.story-step[data-active="true"] .collage-piece {
+  animation: collage-place 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(160ms + var(--i) * 90ms);
+}
+
+/* Chapters: where the story is, and a way to jump. */
+.story-rail {
+  position: absolute;
+  inset-inline: 0;
+  bottom: clamp(1.25rem, 4svh, 2.5rem);
+  z-index: 2;
+}
+.story-rail ol {
+  display: flex;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 640px) {
+  .story-rail ol {
+    padding-inline: 2rem;
+  }
+}
+.story-rail li {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.story-rail a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-top: 0.6rem;
+  border-top: 2px solid var(--border);
+  font-size: 0.85rem;
+  line-height: 1.25;
+  color: var(--muted-foreground);
+  transition:
+    border-color 300ms ease,
+    color 300ms ease;
+}
+.story-rail a:hover {
+  color: var(--foreground);
+}
+.story-rail a[aria-current="step"] {
+  border-top-color: var(--foreground);
+  color: var(--foreground);
+}
+.story-rail-number {
+  font-variant-numeric: tabular-nums;
+}
+.story-rail-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* On a phone there is room for the numbers only. */
+@media (max-width: 639px) {
+  .story-rail-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}

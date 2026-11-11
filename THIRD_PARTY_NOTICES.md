@@ -35,19 +35,11 @@ License 1.1.
 ## Components
 
 Copied with the shadcn CLI into `src/components/vendor/<library>/` and wrapped from our own
-code; see [ADR 0002](docs/adr/0002-vendored-third-party-components.md).
+code, unchanged; see [ADR 0002](docs/adr/0002-vendored-third-party-components.md).
 
-| File                                   | Project                                                        | Licence              | Used for                                   |
-| -------------------------------------- | -------------------------------------------------------------- | -------------------- | ------------------------------------------ |
-| `motion-primitives/image-comparison`   | [Motion Primitives](https://github.com/ibelick/motion-primitives) | MIT               | The reading line of the first collage      |
-| `kokonutui/marker-text`                | [KokonutUI](https://github.com/kokonut-labs/kokonutui)          | MIT                  | The hand-drawn underline of the headline   |
-| `react-bits/StickerPeel`               | [React Bits](https://github.com/DavidHDev/react-bits)           | MIT + Commons Clause | The loose cut-outs on the desk             |
-| `react-bits/HalftoneReveal`            | React Bits                                                      | MIT + Commons Clause | The plate of each project file             |
-| `react-bits/Noise`                     | React Bits                                                      | MIT + Commons Clause | The grain of the footer                    |
-| `react-bits/Ribbons`                   | React Bits                                                      | MIT + Commons Clause | The ribbons of the not-found page          |
-
-### Local changes
-
-- `react-bits/StickerPeel.tsx`, in the effect's clean-up: the WebGL context is released only
-  when the canvas has left the document (`if (!canvas.isConnected)`), as the same library's
-  `Ribbons` does. Without it, React's development double mount left every sticker blank.
+| File                                 | Project                                                           | Licence              | Used for                              |
+| ------------------------------------ | ----------------------------------------------------------------- | -------------------- | ------------------------------------- |
+| `motion-primitives/image-comparison` | [Motion Primitives](https://github.com/ibelick/motion-primitives) | MIT                  | The reading line of the first collage |
+| `react-bits/HalftoneReveal`          | [React Bits](https://github.com/DavidHDev/react-bits)             | MIT + Commons Clause | The plate of each project             |
+| `react-bits/Noise`                   | React Bits                                                        | MIT + Commons Clause | The grain of the footer               |
+| `react-bits/Ribbons`                 | React Bits                                                        | MIT + Commons Clause | The ribbons of the not-found page     |

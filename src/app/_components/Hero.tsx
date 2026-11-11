@@ -1,5 +1,4 @@
 import { Collage } from "@/components/collage/Collage";
-import { Mark, MarkerText } from "@/components/vendor/kokonutui/marker-text";
 import { getCollage, profile } from "@/content";
 import { Reading } from "./Reading";
 
@@ -78,7 +77,6 @@ export function Hero() {
   const layer = (id: string) => collage.layers.find((item) => item.id === id);
   const plate = layer("octopus");
   const read = layer("octopus-read");
-  const [before, after] = profile.headline.split(profile.headlineMark);
 
   return (
     <section className="mx-auto grid w-full max-w-6xl items-center gap-x-14 gap-y-8 px-5 pt-2 pb-16 sm:px-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:pb-20">
@@ -103,17 +101,9 @@ export function Hero() {
       </figure>
 
       <div className="flex flex-col gap-9 lg:order-1">
-        {/* The claim that sets the work apart is underlined by hand, in red ink. */}
-        <MarkerText
-          as="h1"
-          className="max-w-[13ch] font-serif text-[clamp(2.4rem,4.7vw,4.1rem)] leading-[1.03] tracking-[-0.02em] text-balance"
-        >
-          {before}
-          <Mark type="underline" color="var(--vermilion)">
-            {profile.headlineMark}
-          </Mark>
-          {after}
-        </MarkerText>
+        <h1 className="max-w-[13ch] font-serif text-[clamp(2.4rem,4.7vw,4.1rem)] leading-[1.03] tracking-[-0.02em] text-balance">
+          {profile.headline}
+        </h1>
         <ul className="flex max-w-[40ch] flex-col gap-4">
           {profile.notes.map((note) => (
             <li key={note.title} className="text-[0.95rem] leading-relaxed text-muted-foreground">

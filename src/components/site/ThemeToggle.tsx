@@ -3,7 +3,7 @@
 import { applyTheme } from "@/features/prefs/prefs";
 import { useTheme } from "@/features/prefs/use-prefs";
 
-/** Switches between the desk by day and the desk by night. */
+/** Switches between the wall by day and the wall by night. */
 export function ThemeToggle() {
   const theme = useTheme();
   const dark = theme === "dark";

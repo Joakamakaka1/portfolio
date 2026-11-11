@@ -1,4 +1,4 @@
-// The pieces pasted on the pages of the notebook: one small collage per page.
+// The small collages of the story and of the projects: one per step, one per project.
 
 const INK = [30, 35, 33];
 const PAPER = [238, 233, 220];
@@ -67,21 +67,6 @@ function striped({ kit }, w, h, color, tear, seed) {
 const TEXT = { left: 0.2, top: 0.1, width: 0.6, height: 0.3 };
 
 export default {
-  // The cover: boards covered in marbled paper, as on a half-bound book.
-  async "cover-marble"({ kit, src }) {
-    const print = await src("marbled-1720", {
-      crop: { left: 0.2, top: 0.08, width: 0.6, height: 0.84 },
-      width: 720,
-    });
-    return kit.grain(
-      kit.duotone(print, { ink: [14, 18, 36], tint: [86, 100, 150], black: 0.18, white: 0.76 }),
-      {
-        amount: 0.06,
-        seed: 31,
-      },
-    );
-  },
-
   // Shared: a scrap of Latin text and two plain papers.
   "text-a": (c) => scrap(c, "albinus-text", TEXT, 420, { right: 18, bottom: 12 }, 11),
   "text-b": (c) =>
@@ -132,7 +117,7 @@ export default {
   "measure-block": (c) =>
     block(c, "scales", { left: 0.36, top: 0.3, width: 0.3, height: 0.44 }, 260, RED, 7),
 
-  // Proyectos: automata on their stage.
+  // Por mi cuenta: automata on their stage.
   "projects-plate": (c) =>
     scrap(
       c,
@@ -190,15 +175,4 @@ export default {
     ),
   "config-block": (c) =>
     block(c, "turk", { left: 0.4, top: 0.4, width: 0.25, height: 0.15 }, 300, BLUE, 28),
-
-  // Contacto: balloons, the post of their day.
-  "contact-plate": (c) =>
-    scrap(
-      c,
-      "balloons",
-      { left: 0.04, top: 0.03, width: 0.92, height: 0.46 },
-      680,
-      { bottom: 18, right: 10 },
-      29,
-    ),
 };

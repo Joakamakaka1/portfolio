@@ -4,7 +4,7 @@ import { profile } from "@/content";
 import { PREFS_INLINE_SCRIPT } from "@/features/prefs/prefs";
 import "./globals.css";
 
-// Reading: headings, the notebook and anything longer than a label.
+// Reading: headings, the story and anything longer than a label.
 const serif = Newsreader({
   variable: "--font-newsreader",
   subsets: ["latin"],

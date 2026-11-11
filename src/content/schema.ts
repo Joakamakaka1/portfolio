@@ -11,32 +11,26 @@ export const linkSchema = z.object({
   url: z.url(),
 });
 
-export const profileSchema = z
-  .object({
-    name: z.string().min(1),
-    shortName: z.string().min(1),
-    role: z.string().min(1),
-    focus: z.string().min(1),
-    /** The one sentence of the first screen. */
-    headline: z.string().min(1),
-    /** The part of the headline that is underlined by hand. */
-    headlineMark: z.string().min(1),
-    /** Caption of the collage of the first screen; also its text alternative. */
-    plate: z.string().min(1),
-    summary: z.string().min(1),
-    /** Three short notes under the headline. */
-    notes: z.array(z.object({ title: z.string().min(1), text: z.string().min(1) })).length(3),
-    about: z.array(z.string().min(1)).min(1),
-    location: z.string().min(1),
-    email: z.email(),
-    links: z.object({
-      github: linkSchema,
-      linkedin: linkSchema,
-    }),
-  })
-  .refine((profile) => profile.headline.includes(profile.headlineMark), {
-    message: "headlineMark must be a part of headline",
-  });
+export const profileSchema = z.object({
+  name: z.string().min(1),
+  shortName: z.string().min(1),
+  role: z.string().min(1),
+  focus: z.string().min(1),
+  /** The one sentence of the first screen. */
+  headline: z.string().min(1),
+  /** Caption of the collage of the first screen; also its text alternative. */
+  plate: z.string().min(1),
+  summary: z.string().min(1),
+  /** Three short notes under the headline. */
+  notes: z.array(z.object({ title: z.string().min(1), text: z.string().min(1) })).length(3),
+  about: z.array(z.string().min(1)).min(1),
+  location: z.string().min(1),
+  email: z.email(),
+  links: z.object({
+    github: linkSchema,
+    linkedin: linkSchema,
+  }),
+});
 
 export const capabilitySchema = z.object({
   id: z.string().min(1),
@@ -63,6 +57,8 @@ export const projectSchema = z
     status: projectStatusSchema,
     kind: z.string().min(1),
     summary: z.string().min(1),
+    /** What the collage of the project shows, for those who cannot see it. */
+    picture: z.string().min(1),
     problem: z.string().min(1),
     approach: z.array(z.string().min(1)).min(1),
     highlights: z.array(z.string().min(1)).min(1),
@@ -98,16 +94,17 @@ export const studySchema = z.object({
 
 export const inkSchema = z.enum(["ink", "vermilion", "cobalt", "leaf"]);
 
-/** One page of the notebook: a title and a few lines, each written in one ink. */
-export const storyPageSchema = z.object({
+/** One step of the story: a title, a few lines, each written in one ink, and a collage. */
+export const storyStepSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),
+  /** Short name of the step, for the list of chapters. */
   label: z.string().min(1),
   title: z.string().min(1),
-  /** What the collage pasted on the page shows, for those who cannot see it. */
+  /** What the collage of the step shows, for those who cannot see it. */
   picture: z.string().min(1),
-  lines: z.array(z.object({ text: z.string().min(1), ink: inkSchema.default("ink") })),
-  /** Slug of the project this page is about. */
-  project: z.string().optional(),
+  lines: z.array(z.object({ text: z.string().min(1), ink: inkSchema.default("ink") })).min(1),
+  /** Where the step sends the reader next, inside the site. */
+  link: z.object({ label: z.string().min(1), href: z.string().startsWith("/") }).optional(),
 });
 
 export type Profile = z.infer<typeof profileSchema>;
@@ -118,7 +115,7 @@ export type Project = z.infer<typeof projectSchema>;
 export type Experience = z.infer<typeof experienceSchema>;
 export type Study = z.infer<typeof studySchema>;
 export type Ink = z.infer<typeof inkSchema>;
-export type StoryPage = z.infer<typeof storyPageSchema>;
+export type StoryStep = z.infer<typeof storyStepSchema>;
 
 export const PROJECT_STATUS_LABEL: Record<ProjectStatus, string> = {
   terminado: "Terminado",

@@ -1,25 +1,23 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { artwork, collages, profile, projects, story } from ".";
+import { artwork, collages, projects, story } from ".";
 
 describe("story", () => {
-  it("fills the notebook with an even number of pages, so the last leaf has a board behind", () => {
-    expect(story.length % 2).toBe(0);
+  it("has a collage for every step", () => {
+    for (const step of story) expect(collages[step.id], step.id).toBeDefined();
   });
 
-  it("gives every project a page, in the order of the projects", () => {
-    expect(story.filter((page) => page.project).map((page) => page.project)).toEqual(
-      projects.map((project) => project.slug),
-    );
+  it("only links to places inside the site", () => {
+    for (const step of story) {
+      if (step.link) expect(step.link.href.startsWith("/")).toBe(true);
+    }
   });
+});
 
-  it("has a collage for every page", () => {
-    for (const page of story) expect(collages[page.id], page.id).toBeDefined();
-  });
-
-  it("underlines a part of the headline that is really in it", () => {
-    expect(profile.headline).toContain(profile.headlineMark);
+describe("projects", () => {
+  it("has a collage for every project", () => {
+    for (const project of projects) expect(collages[project.slug], project.slug).toBeDefined();
   });
 });
 

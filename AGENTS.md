@@ -28,21 +28,25 @@ Personal portfolio of Joaquín Castro Salas. Read [README.md](README.md) for the
 - Work for Air Europa is mentioned as in `src/content/profile.ts`: the employer and the
   role, never internal projects or the tools used there.
 
-### The notebook
+### The story
 
-- Read ADRs [0007](docs/adr/0007-observation-notebook.md) and
-  [0008](docs/adr/0008-natural-history-collage.md) before changing `src/features/notebook`.
-  The rules of the book live in `book.ts`, without React; add a unit test when you change
-  them.
-- The notebook tells a story: a title and two or three plain sentences per page
-  (`src/content/story.ts`). Lists of tools, dates and figures belong in the project files.
-- Inside a notebook page (`src/app/_components/pages.tsx`) size everything in `em`. A page
-  takes its font size from its own width; `rem` and `px` break that.
-- A page does not scroll and does not grow in book mode. After changing its copy, open it
-  at 1280×720 and check that nothing is clipped; split the page if it no longer fits.
-- The number of pages stays even, so the last leaf has a board behind it.
-- Links to a notebook page from the home page are plain `<a href="#id">`, not `<Link>`:
-  the notebook follows the browser's `hashchange`.
+- Read [ADR 0009](docs/adr/0009-scroll-story-and-projects-board.md) before changing
+  `src/features/story` or `src/features/projects`. Their rules live in `steps.ts` and
+  `board.ts`, without React; add a unit test when you change them.
+- The story is a story: a title and two or three plain sentences per step
+  (`src/content/story.ts`). Lists of tools, dates and figures belong in the projects.
+- The stage does not scroll inside. After changing the copy of a step, look at it at
+  390×844 and at 1280×720 and check that the text and the chapter list do not collide.
+- Every step stays in the document and reachable. Do not hide steps with `display: none`,
+  `visibility` or `inert`.
+- Links to a step from the home page are plain `<a href="#id">`.
+
+### The projects board
+
+- Which project is open is the URL and nothing else. Do not keep it in component state.
+- `/proyectos` and `/proyectos/[slug]` render the same screen. Whatever one of them
+  shows must also work on a direct load of the other and without JavaScript.
+- Pictures of a project carry no caption; the credits of every print are on `/creditos`.
 
 ### Collages and prints
 

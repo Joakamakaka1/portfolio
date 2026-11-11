@@ -14,6 +14,8 @@ export const projectsData: z.input<typeof projectSchema>[] = [
     kind: "Juego narrativo con IA",
     summary:
       "Una partida para cinco amigos: cada día cada jugador envía una acción que no puede editar y, a las 22:00, un narrador de IA las resuelve todas y publica el capítulo.",
+    picture:
+      "Collage: grabado de dos cabezas parlantes en un teatrillo, con un recorte rojo de una imprenta.",
     problem:
       "Que un LLM narre una historia compartida, día tras día, sin contradecirse, sin favorecer a nadie y sin que un fallo a medias publique un capítulo dos veces.",
     approach: [
@@ -54,6 +56,8 @@ export const projectsData: z.input<typeof projectSchema>[] = [
     kind: "Machine learning",
     summary:
       "Un modelo que estima, al confirmar una reserva de hotel, la probabilidad de que se cancele, con API, interfaz y seguimiento de experimentos.",
+    picture:
+      "Collage: grabado de un hombre que consulta un barómetro, con un recorte verde de un globo aerostático.",
     problem:
       "La primera versión acertaba demasiado: un ROC-AUC de 0,95 que venía de fugas de información, no del modelo.",
     approach: [
@@ -101,6 +105,7 @@ export const projectsData: z.input<typeof projectSchema>[] = [
     kind: "Mascota virtual con IA",
     summary:
       "Una app para dos personas: cada una cuida la mascota virtual que representa a la otra, con una IA que conoce sus gustos y su forma de hablar.",
+    picture: "Collage: grabado de dos palomas mensajeras, recortadas sobre un papel rojo.",
     problem:
       "Dar a una mascota la personalidad de una persona concreta y mantenerla coherente, con un coste por conversación que se pueda asumir.",
     approach: [
@@ -136,6 +141,8 @@ export const projectsData: z.input<typeof projectSchema>[] = [
     kind: "Trabajo con agentes",
     summary:
       "Una configuración para trabajar con Claude Code en la que cada pieza (instrucciones, skills, subagentes) se queda solo si las pruebas dicen que aporta.",
+    picture:
+      "Collage: viñeta grabada de una balanza, con un recorte azul de un tablero de ajedrez.",
     problem:
       "Las configuraciones de agentes se comparten por intuición. Sin medir, no se sabe si una regla mejora el resultado o solo encarece cada tarea.",
     approach: [

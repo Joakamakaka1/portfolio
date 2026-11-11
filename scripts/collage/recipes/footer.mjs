@@ -1,6 +1,6 @@
 // The landscape at the foot of the site, made of the same scraps as the rest:
-// hills torn from marbled endpapers and from a page of text, a sun cut from
-// red paper, a balloon and a leaf that stands for a tree.
+// hills torn from marbled endpapers, a sun cut from red paper, a balloon and a
+// leaf that stands for a tree. The footer's own text is set in its sky.
 
 const INK = [30, 35, 33];
 const PAPER = [238, 233, 220];
@@ -70,15 +70,6 @@ export default {
       { ink: [16, 70, 42], tint: [112, 190, 130], black: 0.2, white: 0.74 },
       { height: 130, period: 430, seed: 8 },
       300,
-    ),
-  "hill-near": (c) =>
-    hill(
-      c,
-      "albinus-text",
-      { left: 0.2, top: 0.2, width: 0.6, height: 0.14 },
-      null,
-      { height: 70, period: 620, seed: 12 },
-      260,
     ),
 
   async sun({ kit, src }) {
