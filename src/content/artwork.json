@@ -1,176 +1,49 @@
 [
   {
-    "id": "cygnus",
-    "file": "Johannes Hevelius - Cygnus.jpg",
-    "title": "Cygnus",
-    "author": "Johannes Hevelius",
-    "year": "1690",
-    "work": "Firmamentum Sobiescianum sive Uranographia",
+    "id": "octopus-macropus",
+    "file": "Octopus macropus Merculiano.jpg",
+    "title": "Octopus macropus",
+    "author": "Comingio Merculiano",
+    "year": "1896",
+    "work": "Giuseppe Jatta, I Cefalopodi viventi nel Golfo di Napoli",
     "license": "Public domain",
-    "render": {
-      "mode": "plate",
-      "width": 760,
-      "crop": {
-        "left": 0.32,
-        "top": 0.05,
-        "width": 0.5,
-        "height": 0.76
-      }
-    }
+    "width": 3840
   },
   {
-    "id": "lyra",
-    "file": "Johannes Hevelius - Lyra.jpg",
-    "title": "Lyra",
-    "author": "Johannes Hevelius",
-    "year": "1690",
-    "work": "Firmamentum Sobiescianum sive Uranographia",
-    "license": "Public domain",
-    "render": {
-      "mode": "plate",
-      "width": 620,
-      "crop": {
-        "left": 0.33,
-        "top": 0.33,
-        "width": 0.38,
-        "height": 0.47
-      }
-    }
-  },
-  {
-    "id": "ursa-minor",
-    "file": "Johannes Hevelius - Ursa Minor.jpg",
-    "title": "Ursa Minor",
-    "author": "Johannes Hevelius",
-    "year": "1690",
-    "work": "Firmamentum Sobiescianum sive Uranographia",
-    "license": "Public domain",
-    "render": {
-      "mode": "plate",
-      "width": 620,
-      "crop": {
-        "left": 0.2,
-        "top": 0.47,
-        "width": 0.4,
-        "height": 0.33
-      }
-    }
-  },
-  {
-    "id": "flammarion",
-    "file": "FlammarionWoodcut.jpg",
-    "title": "El punto donde el cielo y la Tierra se tocan",
+    "id": "marbled-1735",
+    "file": "PaperMarbling005France1735.jpg",
+    "title": "Papel jaspeado francés",
     "author": "Anónimo",
-    "year": "1888",
-    "work": "Camille Flammarion, L'atmosphère: météorologie populaire",
-    "license": "Public domain",
-    "render": {
-      "mode": "ink",
-      "width": 860,
-      "crop": {
-        "left": 0,
-        "top": 0,
-        "width": 1,
-        "height": 0.9
-      },
-      "paper": 0.7,
-      "ink": 0.25
-    }
+    "year": "hacia 1735",
+    "work": "Guardas de unas Œuvres d’Horace, París, 1735",
+    "license": "Public domain"
   },
   {
-    "id": "moon",
-    "file": "Hevelius Map of the Moon 1647.jpg",
-    "title": "Mapa de la Luna",
-    "author": "Johannes Hevelius",
-    "year": "1647",
-    "work": "Selenographia",
-    "license": "Public domain",
-    "render": {
-      "mode": "ink",
-      "width": 760,
-      "crop": {
-        "left": 0.085,
-        "top": 0.03,
-        "width": 0.845,
-        "height": 0.955
-      },
-      "paper": 0.72,
-      "ink": 0.25
-    }
+    "id": "marbled-1720",
+    "file": "Marbled endpaper, between 1720 and 1770, from Quintilian ed. Burmann, Leiden 1720.jpg",
+    "title": "Papel jaspeado de unas guardas",
+    "author": "Anónimo",
+    "year": "1720–1770",
+    "work": "Guardas de un Quintiliano editado por Burmann, Leiden, 1720",
+    "license": "Public domain"
   },
   {
-    "id": "turk",
-    "file": "Racknitz - The Turk 1.jpg",
-    "title": "El Turco, autómata ajedrecista",
-    "author": "Joseph Friedrich zu Racknitz",
-    "year": "1789",
-    "work": "Ueber den Schachspieler des Herrn von Kempelen und dessen Nachbildung",
-    "license": "Public domain",
-    "render": {
-      "mode": "plate",
-      "width": 820,
-      "crop": {
-        "left": 0.03,
-        "top": 0.03,
-        "width": 0.94,
-        "height": 0.94
-      }
-    }
+    "id": "scales",
+    "file": "Vignet met weegschaal, RP-P-1909-2656.jpg",
+    "title": "Viñeta con balanza",
+    "author": "Anónimo",
+    "year": "1826–1870",
+    "work": "Rijksmuseum, RP-P-1909-2656",
+    "license": "CC0"
   },
   {
     "id": "microscope",
     "file": "Compound microscope as rendered by artist in Descartes \"La Dioptrique\" LCCN2006690473.jpg",
-    "title": "Observador ante un microscopio compuesto",
+    "title": "Microscopio compuesto",
     "author": "Anónimo",
     "year": "1637",
     "work": "René Descartes, La Dioptrique",
-    "license": "Public domain",
-    "render": {
-      "mode": "ink",
-      "width": 560,
-      "crop": {
-        "left": 0.26,
-        "top": 0.11,
-        "width": 0.54,
-        "height": 0.43
-      },
-      "paper": 0.7,
-      "ink": 0.25
-    }
-  },
-  {
-    "id": "jupiter",
-    "file": "Trouvelot - Jupiter - 1880.jpg",
-    "title": "Júpiter, observado el 1 de noviembre de 1880",
-    "author": "Étienne Léopold Trouvelot",
-    "year": "1881",
-    "work": "The Trouvelot Astronomical Drawings",
-    "license": "Public domain",
-    "render": {
-      "mode": "plate",
-      "width": 820,
-      "crop": {
-        "left": 0.066,
-        "top": 0.07,
-        "width": 0.868,
-        "height": 0.835
-      }
-    }
-  },
-  {
-    "id": "pigeons",
-    "file": "Pigeon Messengers (Harper's Engraving).png",
-    "title": "Palomas mensajeras",
-    "author": "Anónimo",
-    "year": "1873",
-    "work": "Harper's New Monthly Magazine",
-    "license": "Public domain",
-    "render": {
-      "mode": "ink",
-      "width": 820,
-      "paper": 0.7,
-      "ink": 0.25
-    }
+    "license": "Public domain"
   },
   {
     "id": "printer",
@@ -179,52 +52,114 @@
     "author": "Jost Amman",
     "year": "1568",
     "work": "Das Ständebuch",
-    "license": "Public domain",
-    "render": {
-      "mode": "ink",
-      "width": 640,
-      "paper": 0.6,
-      "ink": 0.3
-    }
+    "license": "Public domain"
+  },
+  {
+    "id": "turk",
+    "file": "Racknitz - The Turk 1.jpg",
+    "title": "El Turco",
+    "author": "Joseph Racknitz",
+    "year": "1789",
+    "work": "Ueber den Schachspieler des Herrn von Kempelen und dessen Nachbildung",
+    "license": "Public domain"
+  },
+  {
+    "id": "bartisch",
+    "file": "Bartisch-04v.jpg",
+    "title": "Retrato de Georg Bartisch",
+    "author": "Georg Bartisch",
+    "year": "1583",
+    "work": "Ophthalmodouleia, hoja 4v",
+    "license": "Public domain"
+  },
+  {
+    "id": "magnolia",
+    "file": "NAS-051 Magnolia grandiflora.png",
+    "title": "Magnolia grandiflora",
+    "author": "Pierre-Joseph Redouté (dibujo)",
+    "year": "1819",
+    "work": "François André Michaux, The North American Sylva",
+    "license": "Public domain"
+  },
+  {
+    "id": "phonograph-use",
+    "file": "Fig 99 Phonograph in use.jpg",
+    "title": "El fonógrafo en uso",
+    "author": "Charles Laplante",
+    "year": "1880",
+    "work": "Théodose du Moncel, Le téléphone, le microphone et le phonographe",
+    "license": "Public domain"
+  },
+  {
+    "id": "phonograph-sheet",
+    "file": "Fig 103 A phonograph sheet.jpg",
+    "title": "Una hoja de fonógrafo",
+    "author": "Charles Laplante",
+    "year": "1880",
+    "work": "Théodose du Moncel, Le téléphone, le microphone et le phonographe",
+    "license": "Public domain"
+  },
+  {
+    "id": "vaucanson",
+    "file": "Les automates de Vaucanson. D.4099.jpg",
+    "title": "Los autómatas de Vaucanson",
+    "author": "Hubert-François Gravelot",
+    "year": "1747–1773",
+    "work": "Dibujo, Paris Musées",
+    "license": "CC0"
+  },
+  {
+    "id": "mical",
+    "file": "Têtes parlantes de l'abbé Mical.jpg",
+    "title": "Las cabezas parlantes del abate Mical",
+    "author": "Anónimo",
+    "year": "siglo XVIII",
+    "work": "Reproducido en Histoire des jouets",
+    "license": "Public domain"
   },
   {
     "id": "barometer",
     "file": "Man bij een barometer, RP-P-1911-3423.jpg",
     "title": "Hombre junto a un barómetro",
-    "author": "Anónimo (Rijksmuseum)",
+    "author": "Anónimo",
     "year": "1748–1877",
     "work": "Rijksmuseum, RP-P-1911-3423",
-    "license": "CC0",
-    "render": {
-      "mode": "plate",
-      "width": 560,
-      "crop": {
-        "left": 0.17,
-        "top": 0.195,
-        "width": 0.67,
-        "height": 0.58
-      }
-    }
+    "license": "CC0"
   },
   {
-    "id": "scales",
-    "file": "Vignet met weegschaal, RP-P-1909-2656.jpg",
-    "title": "Viñeta con balanza",
-    "author": "Anónimo (Rijksmuseum)",
-    "year": "1826–1870",
-    "work": "Rijksmuseum, RP-P-1909-2656",
-    "license": "CC0",
-    "render": {
-      "mode": "ink",
-      "width": 520,
-      "crop": {
-        "left": 0.31,
-        "top": 0.18,
-        "width": 0.35,
-        "height": 0.53
-      },
-      "paper": 0.72,
-      "ink": 0.2
-    }
+    "id": "pigeons",
+    "file": "Pigeon Messengers (Harper's Engraving).png",
+    "title": "Palomas mensajeras",
+    "author": "Anónimo",
+    "year": "1873",
+    "work": "Harper's New Monthly Magazine, n.º 275, abril de 1873",
+    "license": "Public domain"
+  },
+  {
+    "id": "balloons",
+    "file": "Air-balloons LCCN2002722692.tif",
+    "title": "Globos aerostáticos",
+    "author": "A. Bell (grabador)",
+    "year": "1784",
+    "work": "Lámina CCCXIV de una publicación sin identificar; Library of Congress",
+    "license": "Public domain"
+  },
+  {
+    "id": "icarus",
+    "file": "Icarus De vier vallers (serietitel), RP-P-OB-10.363.jpg",
+    "title": "Ícaro, de la serie Los cuatro caídos",
+    "author": "Hendrick Goltzius, según Cornelis van Haarlem",
+    "year": "1588",
+    "work": "Rijksmuseum, RP-P-OB-10.363",
+    "license": "CC0"
+  },
+  {
+    "id": "albinus-text",
+    "file": "Tabulae sceleti et musculorum corporis humani, Albinus, 1747, KU Leuven Libraries, Maurits Sabbe Library, P Plano 155, Folio 015v.jpg",
+    "title": "Página de texto",
+    "author": "Bernhard Siegfried Albinus",
+    "year": "1747",
+    "work": "Tabulae sceleti et musculorum corporis humani",
+    "license": "CC0"
   }
 ]

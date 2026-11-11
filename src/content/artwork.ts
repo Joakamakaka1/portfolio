@@ -2,9 +2,9 @@ import { z } from "zod";
 import data from "./artwork.json";
 
 /**
- * Engravings used in the collage. Every entry is a public-domain work hosted
- * on Wikimedia Commons; `scripts/artwork.mjs` reads the same file to download
- * and prepare the images, and is the only reader of `render`.
+ * The prints the collages are cut from. Every entry is a public-domain work
+ * hosted on Wikimedia Commons; `scripts/collage/build.mjs` reads the same file
+ * to download them, and is the only reader of `width`.
  */
 export const artworkSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),
@@ -15,10 +15,8 @@ export const artworkSchema = z.object({
   year: z.string().min(1),
   work: z.string().min(1),
   license: z.enum(["Public domain", "CC0"]),
-  render: z.object({
-    mode: z.enum(["ink", "plate"]),
-    width: z.number().int().positive(),
-  }),
+  /** Width of the copy to download; Commons serves fixed steps only. */
+  width: z.union([z.literal(1920), z.literal(3840)]).optional(),
 });
 
 export type Artwork = z.infer<typeof artworkSchema> & { sourceUrl: string };

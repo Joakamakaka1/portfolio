@@ -7,29 +7,29 @@
  *
  * From 1024px up it is a book: leaves turn around the spine in 3D and two
  * faces are visible. Below that the same markup becomes a horizontal pager,
- * one face at a time, and pages grow as tall as their content.
+ * one face at a time. In both, the index lays every page out as a grid.
  */
 
 .nb {
-  --nb-page-w: min(100vw - 2.5rem, 25rem);
-  --nb-page-h: calc(var(--nb-page-w) * 1.42);
-  --nb-unit: calc(var(--nb-page-w) / 23);
-  --nb-board: calc(var(--nb-unit) * 0.55);
-  --nb-turn: 850ms;
+  --nb-page-w: min(100vw - 2.5rem, 24rem);
+  --nb-page-h: calc(var(--nb-page-w) * 1.38);
+  --nb-unit: calc(var(--nb-page-w) / 24);
+  --nb-radius: 1.15em;
+  --nb-turn: 900ms;
   --nb-ease: cubic-bezier(0.3, 0.1, 0.2, 1);
+  --nb-board-color: #17181d;
 
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   width: 100%;
 }
 
 .nb-stage {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
   width: 100%;
 }
 
@@ -42,7 +42,7 @@
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
-  padding: 0.5rem calc((100% - var(--nb-page-w)) / 2) 1.75rem;
+  padding: 0.5rem calc((100% - var(--nb-page-w)) / 2) 2rem;
 }
 
 .nb-leaf {
@@ -56,16 +56,15 @@
   flex-direction: column;
   min-height: var(--nb-page-h);
   scroll-snap-align: center;
-  /* A link to a page should bring the notebook into view, not hide its tabs. */
-  scroll-margin-top: 5rem;
+  scroll-margin-top: 6rem;
   overflow: hidden;
-  border-radius: 0.4em;
+  border-radius: var(--nb-radius);
   font-size: var(--nb-unit);
   color: var(--ink);
-  background-color: var(--cobalt);
+  background-color: var(--paper);
   box-shadow:
-    0 0.1em 0.2em rgb(20 22 30 / 0.3),
-    0 1em 2em rgb(20 22 30 / 0.22);
+    0 0.1em 0.2em rgb(10 12 24 / 0.3),
+    0 1.2em 2.4em rgb(10 12 24 / 0.28);
 }
 
 /* A sheet of squared paper. */
@@ -74,145 +73,182 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 1em;
+  gap: 0.9em;
   min-height: 0;
   overflow: hidden;
-  padding: 2.1em 1.9em 2.4em;
+  padding: 2.4em 2.2em 2.6em;
   background-color: var(--paper);
   background-image:
     linear-gradient(var(--grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 1.6em 1.6em;
-  background-position: -1px -1px;
+  background-size: 1.5em 1.5em;
+  background-position: -1px 0.4em;
 }
 
 .nb-folio {
   position: absolute;
-  bottom: 0.7em;
-  font-family: var(--font-hand);
-  font-size: 0.95em;
+  bottom: 0.9em;
+  font-family: var(--font-sans);
+  font-size: 0.72em;
+  font-variant-numeric: tabular-nums;
   color: var(--ink-soft);
 }
 .nb-front .nb-folio {
-  right: 1.4em;
+  right: 1.6em;
 }
 .nb-back .nb-folio {
-  left: 1.4em;
+  left: 1.6em;
 }
 
-/* The cover's click target fills the whole face. */
-.nb-open {
+/* A click target that fills a whole face: the cover, and every page of the index. */
+.nb-hit {
   position: absolute;
   inset: 0;
+  z-index: 5;
+  border-radius: inherit;
   cursor: pointer;
 }
-.nb-open:focus-visible {
-  outline-offset: -6px;
-  outline-color: var(--star);
+.nb-hit:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
 }
 
-/* Bookmarks. */
-.nb-tabs {
+/* Heading above the book. */
+.nb-heading {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  order: -1;
-  padding-inline: 1rem;
-}
-.nb-tab {
-  padding: 0.45rem 0.8rem;
-  border-radius: 0.35rem;
-  font-family: var(--font-display);
-  font-size: 0.875rem;
-  font-weight: 600;
-  line-height: 1;
-  color: var(--ink);
-  background-color: var(--nb-tab, var(--star));
-  box-shadow: 0 1px 2px rgb(20 22 30 / 0.25);
-}
-.nb-tab[aria-current="true"] {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  text-align: center;
 }
 
-/* Controls. */
+/* Controls: round paper buttons, as on a reading app. */
 .nb-controls {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
 }
 .nb-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-width: 2.75rem;
-  height: 2.75rem;
+  min-width: 3rem;
+  height: 3rem;
   padding-inline: 0.9rem;
   border-radius: 999px;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: var(--primary-foreground);
-  background-color: var(--primary);
+  color: var(--ink);
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgb(10 12 24 / 0.25);
   cursor: pointer;
-  transition: transform 150ms var(--nb-ease);
+  transition:
+    transform 160ms var(--nb-ease),
+    background-color 160ms ease;
 }
 .nb-button:hover:not([aria-disabled="true"]) {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+}
+.nb-button:active:not([aria-disabled="true"]) {
+  transform: translateY(0) scale(0.96);
 }
 .nb-button[aria-disabled="true"] {
-  opacity: 0.35;
+  opacity: 0.4;
   cursor: default;
 }
+.nb-button[aria-pressed="true"] {
+  color: #fff;
+  background-color: var(--ink);
+}
 .nb-count {
-  min-width: 5.5rem;
+  min-width: 6.5rem;
   text-align: center;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-variant-numeric: tabular-nums;
+  color: var(--desk-muted);
+}
+
+/* Index: every page at once. Pages are sized in em, so a thumbnail is the real page. */
+.nb[data-view="index"] {
+  --nb-page-w: clamp(8.5rem, 28vw, 12rem);
+  /* The proportions of the book, where pages are known to fit. */
+  --nb-unit: calc(var(--nb-page-w) / 27);
+}
+.nb[data-view="index"] .nb-book {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--nb-page-w), 1fr));
+  justify-items: center;
+  gap: 1.25rem 1rem;
+  overflow: visible;
+  padding: 0.5rem 1.25rem 1rem;
+  width: min(100%, 64rem);
+  margin-inline: auto;
+}
+.nb[data-view="index"] .nb-face {
+  width: var(--nb-page-w);
+  height: var(--nb-page-h);
+  min-height: 0;
+  transition: transform 160ms var(--nb-ease);
+}
+.nb[data-view="index"] .nb-face:hover {
+  transform: translateY(-0.4rem) rotate(-1deg);
+}
+.nb[data-view="index"] .nb-face[data-current="true"] {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
 }
 
 /* Book. */
 @media (min-width: 1024px) {
-  .nb {
-    --nb-page-w: clamp(19rem, min(36vw, 54svh), 31rem);
+  .nb:not([data-view="index"]) {
+    --nb-page-w: clamp(19rem, min(34vw, 56svh), 30rem);
     --nb-unit: calc(var(--nb-page-w) / 27);
+    --nb-board: calc(var(--nb-unit) * 0.95);
+    /* How far the open halves lean towards the reader, and how much flatter each page underneath lies. */
+    --nb-tilt: 15deg;
+    --nb-fan: 2deg;
+  }
+  .nb:not([data-view="index"])[data-open="0"] {
+    --nb-tilt: 0deg;
+    --nb-fan: 0deg;
   }
 
-  .nb-stage {
-    display: block;
+  .nb:not([data-view="index"]) .nb-stage {
     width: calc(var(--nb-page-w) * 2);
     height: var(--nb-page-h);
     transition: transform var(--nb-turn) var(--nb-ease);
   }
   /* Closed, only the right half exists: bring the cover to the middle. */
-  .nb[data-open="0"] .nb-stage {
-    transform: translateX(-25%) rotate(-2.5deg);
+  .nb:not([data-view="index"])[data-open="0"] .nb-stage {
+    transform: translateX(-25%) rotate(-3deg);
   }
 
-  .nb-book {
+  .nb:not([data-view="index"]) .nb-book {
     position: absolute;
     inset: 0;
     display: block;
     overflow: visible;
     padding: 0;
-    perspective: 2800px;
+    perspective: 2100px;
+    perspective-origin: 50% 45%;
   }
   /* Shadow of the whole book on the desk. */
-  .nb-book::before {
+  .nb:not([data-view="index"]) .nb-book::before {
     content: "";
     position: absolute;
-    inset: 2% 1% 0 50%;
-    border-radius: 0.5em;
-    box-shadow: 0 1.6em 2.6em rgb(20 22 30 / 0.4);
+    inset: 6% 3% -3% 52%;
+    border-radius: 40%;
+    background: rgb(10 12 24 / 0.5);
+    filter: blur(2.2em);
     transition: inset var(--nb-turn) var(--nb-ease);
   }
-  .nb:not([data-open="0"]) .nb-book::before {
-    inset: 2% 1% 0 1%;
+  .nb:not([data-view="index"]):not([data-open="0"]) .nb-book::before {
+    inset: 10% 2% -5% 2%;
   }
 
-  .nb-leaf {
+  .nb:not([data-view="index"]) .nb-leaf {
     position: absolute;
     display: block;
     top: var(--nb-board);
@@ -221,171 +257,164 @@
     height: calc(100% - 2 * var(--nb-board));
     transform-origin: left center;
     transform-style: preserve-3d;
+    /* Pages still to be read: the top one leans most, the ones under it lie flatter. */
+    transform: rotateY(calc(-1 * var(--nb-tilt) + (var(--nb-i) - var(--nb-open)) * var(--nb-fan)));
     z-index: calc(var(--nb-leaves) - var(--nb-i));
     transition:
       transform var(--nb-turn) var(--nb-ease),
       z-index 0s calc(var(--nb-turn) / 2);
   }
-  .nb-leaf[data-flipped="true"] {
-    transform: rotateY(-180deg);
+  .nb:not([data-view="index"]) .nb-leaf[data-flipped="true"] {
+    transform: rotateY(
+      calc(-180deg + var(--nb-tilt) - (var(--nb-open) - 1 - var(--nb-i)) * var(--nb-fan))
+    );
     z-index: var(--nb-i);
   }
   /* The first and last leaves are the boards, a little larger than the paper. */
-  .nb-leaf[data-board="true"] {
+  .nb:not([data-view="index"]) .nb-leaf[data-board="true"] {
     top: 0;
     width: 50%;
     height: 100%;
   }
 
-  .nb-face {
+  .nb:not([data-view="index"]) .nb-face {
     position: absolute;
     inset: 0;
     min-height: 0;
-    /* The book sits in the first screen: following a link to a page must not move the desk. */
-    scroll-margin-top: 100vh;
+    /* A link to a page brings the book to the middle of the screen. */
+    scroll-margin-top: calc((100svh - var(--nb-page-h)) / 2);
     backface-visibility: hidden;
-    border-radius: 0 0.5em 0.5em 0;
-    box-shadow: none;
-    background-color: var(--paper);
+    border-radius: 0 var(--nb-radius) var(--nb-radius) 0;
+    /* The fore-edge: the pile of pages under this one, seen from the side. */
+    box-shadow:
+      inset -1px 0 0 rgb(10 12 24 / 0.1),
+      0.14em 0.02em 0 -0.02em #e9e8e3,
+      0.18em 0.03em 0 -0.02em #b9bbc0,
+      0.32em 0.05em 0 -0.04em #efeee9,
+      0.36em 0.06em 0 -0.04em #b9bbc0,
+      0.5em 0.08em 0 -0.06em #e9e8e3,
+      0.54em 0.09em 0 -0.06em #a9abb1;
   }
-  .nb-back {
+  .nb:not([data-view="index"]) .nb-back {
     transform: rotateY(180deg);
-    border-radius: 0.5em 0 0 0.5em;
+    border-radius: var(--nb-radius) 0 0 var(--nb-radius);
+    box-shadow:
+      inset 1px 0 0 rgb(10 12 24 / 0.1),
+      -0.14em 0.02em 0 -0.02em #e9e8e3,
+      -0.18em 0.03em 0 -0.02em #b9bbc0,
+      -0.32em 0.05em 0 -0.04em #efeee9,
+      -0.36em 0.06em 0 -0.04em #b9bbc0,
+      -0.5em 0.08em 0 -0.06em #e9e8e3,
+      -0.54em 0.09em 0 -0.06em #a9abb1;
   }
-  .nb-leaf[data-board="true"] > .nb-face {
-    background-color: var(--cobalt);
+  /* Boards have no pile of their own. */
+  .nb:not([data-view="index"]) .nb-leaf[data-board="true"] > .nb-face {
+    box-shadow: none;
+  }
+  .nb:not([data-view="index"]) .nb-leaf[data-board="true"] > .nb-face {
+    background-color: var(--nb-board-color);
     padding: var(--nb-board) var(--nb-board) var(--nb-board) 0;
   }
-  .nb-leaf[data-board="true"] > .nb-back {
+  .nb:not([data-view="index"]) .nb-leaf[data-board="true"] > .nb-back {
     padding: var(--nb-board) 0 var(--nb-board) var(--nb-board);
   }
-  .nb-leaf[data-board="true"] > .nb-cover {
+  .nb:not([data-view="index"]) .nb-leaf[data-board="true"] > .nb-cover {
     padding: 0;
   }
+  .nb:not([data-view="index"]) .nb-leaf[data-board="true"] .nb-sheet {
+    border-radius: 0 calc(var(--nb-radius) * 0.8) calc(var(--nb-radius) * 0.8) 0;
+  }
+  .nb:not([data-view="index"]) .nb-leaf[data-board="true"] > .nb-back .nb-sheet {
+    border-radius: calc(var(--nb-radius) * 0.8) 0 0 calc(var(--nb-radius) * 0.8);
+  }
 
-  /* The paper darkens towards the spine. */
-  .nb-sheet::after {
+  /* The paper bends into the spine: a shadow in the gutter, then the light it catches. */
+  .nb:not([data-view="index"]) .nb-sheet::after {
     content: "";
     position: absolute;
     inset: 0;
+    z-index: 4;
     pointer-events: none;
-    background: linear-gradient(90deg, rgb(20 22 30 / 0.16), transparent 9%);
+    background: linear-gradient(
+      90deg,
+      rgb(10 12 24 / 0.26),
+      rgb(10 12 24 / 0.07) 4%,
+      rgb(255 255 255 / 0.28) 9%,
+      transparent 20%,
+      transparent 86%,
+      rgb(10 12 24 / 0.05)
+    );
   }
-  .nb-back .nb-sheet::after {
-    background: linear-gradient(270deg, rgb(20 22 30 / 0.16), transparent 9%);
-  }
-
-  .nb-tabs {
-    position: absolute;
-    top: 9%;
-    left: 100%;
-    z-index: -1;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    gap: 0.45em;
-    order: 0;
-    padding: 0;
-    font-size: var(--nb-unit);
-  }
-  .nb-stage {
-    isolation: isolate;
-  }
-  .nb-tab {
-    margin-left: -0.5em;
-    padding: 0.6em 0.8em 0.6em 1.1em;
-    border-radius: 0 0.4em 0.4em 0;
-    font-size: 0.95em;
-    white-space: nowrap;
-    transition: margin-left 150ms var(--nb-ease);
-  }
-  .nb-tab:hover,
-  .nb-tab[aria-current="true"] {
-    margin-left: 0;
+  .nb:not([data-view="index"]) .nb-back .nb-sheet::after {
+    transform: scaleX(-1);
   }
 }
 
 /* Type on paper. */
 .nb-title {
-  font-family: var(--font-hand);
-  font-size: 2.3em;
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
+  font-family: var(--font-serif);
+  font-size: 2.05em;
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
 }
-.nb-note {
-  font-family: var(--font-hand);
-  font-size: 1.22em;
-  line-height: 1.311;
+.nb-text {
+  font-family: var(--font-serif);
+  font-size: 1.16em;
+  line-height: 1.293;
+  text-wrap: pretty;
 }
-.nb-print {
-  font-family: var(--font-display);
-  font-size: 0.86em;
-  line-height: 1.3;
-}
-.nb-mark {
-  background-image: linear-gradient(
-    transparent 58%,
-    var(--nb-mark, var(--star)) 58%,
-    var(--nb-mark, var(--star)) 92%,
-    transparent 92%
-  );
+.nb-small {
+  font-family: var(--font-sans);
+  font-size: 0.76em;
+  line-height: 1.35;
 }
 .nb-link {
   color: var(--cobalt);
   text-decoration: underline;
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.16em;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.18em;
 }
 .nb-link:hover {
-  text-decoration-thickness: 0.14em;
+  text-decoration-thickness: 0.12em;
 }
 
-/* A rubber stamp. */
-.nb-stamp {
-  display: inline-block;
-  padding: 0.38em 0.6em 0.32em;
-  border: 0.17em solid currentColor;
-  border-radius: 0.3em;
-  font-family: var(--font-display);
-  font-size: 0.9em;
-  font-stretch: 75%;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transform: rotate(-5deg);
+/* Where the collage of a page goes: whatever room the text leaves. */
+.nb-art {
+  position: relative;
+  display: grid;
+  flex: 1;
+  place-items: center;
+  min-height: 9em;
+  container-type: size;
+}
+.nb-art .collage {
+  width: min(100cqw, 100cqh * var(--ratio));
 }
 
-/* A strip from a label maker. */
-.nb-strip {
-  display: inline-block;
-  padding: 0.3em 0.5em;
-  border-radius: 0.12em;
-  font-family: var(--font-display);
-  font-size: 0.78em;
-  font-weight: 600;
-  line-height: 1;
-  color: var(--paper);
-  background-color: var(--ink);
+/* A piece pasted on the page. */
+.nb-pasted {
+  position: relative;
+  filter: drop-shadow(0 0.08em 0.1em rgb(10 12 24 / 0.22))
+    drop-shadow(0 0.5em 0.7em rgb(10 12 24 / 0.12));
 }
 
-/* Translucent tape holding a clipping. */
-.nb-tape {
-  position: absolute;
-  width: 4.2em;
-  height: 1.25em;
-  background-color: rgb(255 210 63 / 0.62);
-  box-shadow: 0 0.05em 0.1em rgb(20 22 30 / 0.18);
-}
-
-/* The cover: cobalt cloth. */
+/* The cover: marbled boards and a cloth spine. */
 .nb-cover-art {
   position: relative;
   flex: 1;
   overflow: hidden;
-  background-color: var(--cobalt);
+  background-color: var(--nb-board-color);
+}
+.nb-spine {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 13%;
+  background-color: var(--nb-board-color);
   background-image:
-    repeating-linear-gradient(0deg, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(90deg, rgb(10 16 60 / 0.1) 0 1px, transparent 1px 3px);
+    repeating-linear-gradient(0deg, rgb(255 255 255 / 0.04) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgb(0 0 0 / 0.25) 0 1px, transparent 1px 3px);
+  box-shadow: 0.1em 0 0.25em rgb(0 0 0 / 0.45);
 }

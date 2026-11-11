@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { profile } from "@/content";
-import { Star } from "./Star";
 import { ThemeToggle } from "./ThemeToggle";
 
 const LINKS = [
+  { hash: "quien-soy", label: "Historia" },
   { hash: "proyectos", label: "Proyectos" },
   { hash: "contacto", label: "Contacto" },
 ];
@@ -14,18 +14,16 @@ const LINKS = [
  * navigate to the home page first.
  */
 export function SiteHeader({ home = false }: { home?: boolean }) {
-  const brand = (
-    <>
-      <Star size={18} className="text-vermilion" />
-      {profile.name}
-    </>
-  );
-  const brandClass = "flex items-center gap-2 font-display text-lg font-bold";
+  const brand = profile.name;
+  const brandClass = "font-semibold tracking-[-0.01em]";
 
   return (
-    <header className="relative z-20 flex items-center justify-between gap-4 px-5 py-4 sm:px-8 lg:px-[5vw]">
+    <header
+      id="top"
+      className="relative z-20 mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-5 py-5 sm:px-8"
+    >
       {home ? (
-        <a href="#tapa" className={brandClass}>
+        <a href="#top" className={brandClass}>
           {brand}
         </a>
       ) : (
@@ -33,10 +31,7 @@ export function SiteHeader({ home = false }: { home?: boolean }) {
           {brand}
         </Link>
       )}
-      <nav
-        aria-label="Principal"
-        className="flex items-center gap-4 font-display font-medium sm:gap-6"
-      >
+      <nav aria-label="Principal" className="flex items-center gap-4 text-[0.95rem] sm:gap-7">
         {LINKS.map((link) =>
           home ? (
             <a key={link.hash} href={`#${link.hash}`} className="hover:underline max-sm:hidden">

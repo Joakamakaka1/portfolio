@@ -6,6 +6,23 @@ export const profileData: z.input<typeof profileSchema> = {
   shortName: "Joaquín",
   role: "Desarrollador Full Stack IA",
   focus: "LLMs, agentes y evaluación de calidad",
+  headline: "Construyo aplicaciones con modelos de lenguaje y compruebo que funcionan.",
+  headlineMark: "compruebo que funcionan",
+  plate: "Lámina I. Un agente y sus herramientas: mirar de cerca, medir y dejarlo escrito.",
+  notes: [
+    {
+      title: "Agentes",
+      text: "Agentes con herramientas, flujos con estado y servidores MCP detrás de una API.",
+    },
+    {
+      title: "Evaluación",
+      text: "Métricas, un segundo modelo que hace de juez y trazas para saber por qué falló.",
+    },
+    {
+      title: "De punta a punta",
+      text: "Del backend y la nube en AWS a la interfaz en React, con tests desde el principio.",
+    },
+  ],
   summary:
     "Construyo aplicaciones con LLMs de punta a punta: del backend y la nube a la interfaz, y con evaluaciones que dicen si funcionan.",
   about: [

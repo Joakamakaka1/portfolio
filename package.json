@@ -19,10 +19,12 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
-    "artwork": "node scripts/artwork.mjs"
+    "collage": "node scripts/collage/build.mjs"
   },
   "dependencies": {
     "cn": "^0.5.2",
+    "lucide-react": "^1.71.0",
+    "motion": "^14.12.0",
     "next": "16.4.6",
     "react": "19.3.0",
     "react-dom": "19.3.0",

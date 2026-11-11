@@ -2,16 +2,19 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "../features/notebook/notebook.css";
+@import "../components/collage/collage.css";
 
 @custom-variant dark (&:is(.dark *));
 
 /*
  * Design tokens.
  *
- * The site is a desk with a paper notebook on it, so there are two surfaces:
- * the desk (background / foreground, which change with the theme) and paper
- * (paper / ink, which do not: paper stays paper at night). The inks come from
- * the collage references: vermilion, cobalt and leaf green over khaki.
+ * Three surfaces. The wall (background / foreground) is where the collages
+ * hang and it follows the theme. The desk is the slate-blue band the notebook
+ * lies on. Paper (paper / ink) never changes: paper stays paper at night.
+ *
+ * Colour is ink, not decoration: vermilion, cobalt and leaf green are used the
+ * way a two-colour print uses them, in small areas over aged paper.
  *
  * The shadcn names are kept so components added under src/components/vendor
  * pick the palette up.
@@ -35,7 +38,11 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-link: var(--link);
 
+  --color-desk: var(--desk);
+  --color-desk-foreground: var(--desk-foreground);
+  --color-desk-muted: var(--desk-muted);
   --color-paper: var(--paper);
   --color-paper-aged: var(--paper-aged);
   --color-grid: var(--grid);
@@ -46,14 +53,12 @@
   --color-cobalt: var(--cobalt);
   --color-leaf: var(--leaf);
   --color-leaf-ink: var(--leaf-ink);
-  --color-star: var(--star);
   --color-mint: var(--mint);
   --color-peach: var(--peach);
   --color-sky: var(--sky);
 
-  --font-sans: var(--font-body);
-  --font-display: var(--font-display);
-  --font-hand: var(--font-hand);
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-newsreader), ui-serif, Georgia, serif;
 
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
@@ -68,60 +73,65 @@
   --radius: 0.5rem;
 
   /* Paper and inks: the same in both themes. */
-  --paper: #fbfaf4;
-  --paper-aged: #efe7d2;
-  --grid: #c9d3e6;
-  --ink: #1b1f2e;
-  --ink-soft: #4d5266;
-  --vermilion: #f0432a;
-  --vermilion-ink: #c92d16;
-  --cobalt: #2a4fd0;
-  --leaf: #2f8f57;
-  --leaf-ink: #1e7040;
-  --star: #ffd23f;
-  --mint: #cfe8c9;
-  --peach: #f6cdb0;
-  --sky: #cbd6f7;
+  --paper: #f6f5f0;
+  --paper-aged: #e9e1cd;
+  --grid: #d3d8e0;
+  --ink: #1e2321;
+  --ink-soft: #585d59;
+  --vermilion: #e5432b;
+  --vermilion-ink: #bf321c;
+  --cobalt: #2b55b5;
+  --leaf: #46a063;
+  --leaf-ink: #2a7343;
+  --mint: #cfe6cf;
+  --peach: #f5cdb4;
+  --sky: #cdd8f5;
 
-  /* The desk by day. */
-  --background: #e3e0d0;
-  --foreground: #15171c;
+  /* The desk under the notebook. */
+  --desk: #3c4466;
+  --desk-foreground: #f1f2f7;
+  --desk-muted: #c3c8dc;
+
+  /* The wall by day. */
+  --background: #f4f2ec;
+  --foreground: #1e2321;
   --card: var(--paper);
   --card-foreground: var(--ink);
   --popover: var(--paper);
   --popover-foreground: var(--ink);
-  --primary: #15171c;
-  --primary-foreground: #fbfaf4;
-  --secondary: #d5d1bd;
-  --secondary-foreground: #15171c;
-  --muted: #d5d1bd;
-  --muted-foreground: #4f5146;
-  --accent: #d5d1bd;
-  --accent-foreground: #15171c;
-  --destructive: #c92d16;
-  --border: #bdb8a0;
-  --input: #a9a48b;
-  --ring: #2a4fd0;
-  --link: #1f3fb5;
+  --primary: #1e2321;
+  --primary-foreground: #f6f5f0;
+  --secondary: #e7e3d8;
+  --secondary-foreground: #1e2321;
+  --muted: #e7e3d8;
+  --muted-foreground: #5a5f5a;
+  --accent: #e7e3d8;
+  --accent-foreground: #1e2321;
+  --destructive: #bf321c;
+  --border: #d6d2c5;
+  --input: #a9a596;
+  --ring: #2b55b5;
+  --link: #2449a3;
 }
 
 .dark {
-  /* The desk by night; the paper keeps its colour. */
-  --background: #2e3450;
-  --foreground: #eef0f6;
-  --primary: #eef0f6;
-  --primary-foreground: #1b1f2e;
-  --secondary: #3a4163;
-  --secondary-foreground: #eef0f6;
-  --muted: #3a4163;
-  --muted-foreground: #c1c7dc;
-  --accent: #3a4163;
-  --accent-foreground: #eef0f6;
+  /* The wall by night; paper keeps its colour. */
+  --desk: #333a5a;
+  --background: #1b1e2b;
+  --foreground: #eceae3;
+  --primary: #eceae3;
+  --primary-foreground: #1e2321;
+  --secondary: #2a2e40;
+  --secondary-foreground: #eceae3;
+  --muted: #2a2e40;
+  --muted-foreground: #b9bccb;
+  --accent: #2a2e40;
+  --accent-foreground: #eceae3;
   --destructive: #ff8a78;
-  --border: #505880;
-  --input: #5f6890;
-  --ring: #ffd23f;
-  --link: #b9c8ff;
+  --border: #3a3f55;
+  --input: #5d6380;
+  --ring: #a9bcff;
+  --link: #b3c4ff;
 }
 
 @layer base {
@@ -140,120 +150,14 @@
     outline-offset: 2px;
   }
   ::selection {
-    background: var(--star);
-    color: var(--ink);
+    background: var(--cobalt);
+    color: #fff;
   }
 }
 
-/* Fine grain over the desk, so the flat colour reads as a surface. */
-.desk-grain {
+/* Fine grain, so a flat colour reads as a surface. */
+.grain {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
-}
-
-/* A pasted clipping: slightly aged paper lifted off the page. */
-.clipping {
-  background-color: var(--paper-aged);
-  box-shadow:
-    0 0.06em 0.12em rgb(20 22 30 / 0.25),
-    0 0.5em 1.2em rgb(20 22 30 / 0.16);
-}
-
-/*
- * The desk. While the notebook is closed the introduction sits beside it; once
- * it opens, the introduction steps aside and the loose pieces slide to the
- * edges to leave the middle to the book.
- */
-.desk-piece {
-  transform: rotate(var(--r, 0deg));
-  transition: transform 850ms cubic-bezier(0.3, 0.1, 0.2, 1);
-}
-.desk-comet {
-  transition:
-    transform 850ms cubic-bezier(0.3, 0.1, 0.2, 1),
-    opacity 600ms ease;
-}
-.desk-night {
-  background-image:
-    radial-gradient(1px 1px at 12% 30%, #fff 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 30% 12%, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 44% 70%, #fff 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 58% 22%, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 70% 60%, #fff 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 86% 34%, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 95% 78%, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 5% 84%, #fff 50%, transparent 51%);
-}
-
-@media (min-width: 1024px) {
-  .desk-intro {
-    transform: translateY(-50%);
-    transition:
-      opacity 400ms ease,
-      transform 850ms cubic-bezier(0.3, 0.1, 0.2, 1),
-      visibility 0s;
-  }
-  .desk .nb[data-open="0"] .nb-stage {
-    transform: translateX(calc(-25% + 19vw)) rotate(-2.5deg);
-  }
-  .desk .nb-controls {
-    transition: transform 850ms cubic-bezier(0.3, 0.1, 0.2, 1);
-  }
-  .desk .nb[data-open="0"] .nb-controls {
-    transform: translateX(19vw);
-  }
-  .desk:has(.nb:not([data-open="0"])) .desk-intro {
-    opacity: 0;
-    visibility: hidden;
-    transform: translate(-3rem, -50%);
-    transition:
-      opacity 300ms ease,
-      transform 850ms cubic-bezier(0.3, 0.1, 0.2, 1),
-      visibility 0s 300ms;
-  }
-  .desk:has(.nb:not([data-open="0"])) .desk-piece {
-    transform: translate(var(--dx, 0), var(--dy, 0)) rotate(var(--r, 0deg));
-  }
-  .desk:has(.nb:not([data-open="0"])) .desk-comet {
-    opacity: 0.55;
-    transform: translate(-6vw, -3vh);
-  }
-}
-
-/* The printed landscape of the footer. */
-.site-footer {
-  --f-sky: #7fb0e4;
-  --f-cloud: #fdf2de;
-  --f-hill: #a3b66c;
-  --f-bush: #f0683c;
-  --f-tree: #4f86cf;
-  color: var(--ink);
-  background-color: var(--f-sky);
-}
-.site-footer .footer-stars {
-  fill: transparent;
-}
-.dark .site-footer {
-  --f-sky: #1b2036;
-  --f-cloud: #353d5c;
-  --f-hill: #27433a;
-  --f-bush: #7c3527;
-  --f-tree: #10142a;
-  color: #eef0f6;
-}
-.dark .site-footer .footer-stars {
-  fill: #fff;
-}
-
-@keyframes star-twinkle {
-  0%,
-  100% {
-    opacity: 0.35;
-    transform: scale(0.8) rotate(0deg);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1) rotate(20deg);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

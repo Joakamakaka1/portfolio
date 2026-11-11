@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
-import { Cutout } from "@/components/collage/Cutout";
+import { type ReactNode, Suspense } from "react";
 import { formatMetric } from "@/components/site/format";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
-import { getProject, PROJECT_STATUS_LABEL, projects } from "@/content";
-import { cn } from "@/lib/utils";
-import { Repository, STATUS_INK } from "../../_components/pages";
-import { projectArt } from "../../_components/project-art";
+import { getArtwork, getCollage, getProject, PROJECT_STATUS_LABEL, projects } from "@/content";
+import { Plate } from "./Plate";
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
@@ -24,122 +21,166 @@ export async function generateMetadata(props: PageProps<"/proyectos/[slug]">): P
 export default function ProjectFilePage({ params }: PageProps<"/proyectos/[slug]">) {
   return (
     <>
-      <div className="desk-grain flex min-h-svh flex-col">
-        <SiteHeader />
-        <main className="flex-1 px-4 pt-4 pb-16 sm:px-8">
-          {/*
-            The desk around the file is the same for every project. Only the file
-            reads the URL, so it sits behind Suspense and the rest can be shown at once.
-          */}
-          <Suspense fallback={<div className={cn(SHEET, "min-h-[70svh]")} />}>
-            <ProjectFile params={params} />
-          </Suspense>
-        </main>
-      </div>
+      <SiteHeader />
+      <main className="mx-auto w-full max-w-6xl flex-1 px-5 pt-6 pb-24 sm:px-8">
+        {/*
+          The frame is the same for every project. Only the file reads the URL,
+          so it sits behind Suspense and the rest can be shown at once.
+        */}
+        <Suspense fallback={<div className="min-h-[70svh]" />}>
+          <ProjectFile params={params} />
+        </Suspense>
+      </main>
       <SiteFooter />
     </>
   );
 }
 
-const SHEET =
-  "relative mx-auto max-w-3xl -rotate-[0.4deg] bg-paper px-6 pt-8 pb-12 text-ink shadow-[0_1px_2px_rgb(20_22_30/0.25),0_18px_40px_rgb(20_22_30/0.2)] sm:px-12 sm:pt-10";
+/** The print each project is shown with: piece of its notebook collage, source and inks. */
+const PLATES: Record<string, { piece: string; work: string; ink: string; paper: string }> = {
+  cronista: { piece: "cronista-plate", work: "mical", ink: "#7d2012", paper: "#efe3cf" },
+  "cancelaciones-hotel": {
+    piece: "hotel-plate",
+    work: "barometer",
+    ink: "#1f5b3a",
+    paper: "#e6ecdc",
+  },
+  twochi: { piece: "twochi-figure", work: "pigeons", ink: "#24449f", paper: "#e4e8f3" },
+  "configuracion-evaluada": {
+    piece: "config-plate",
+    work: "scales",
+    ink: "#24449f",
+    paper: "#ebe6d6",
+  },
+};
+
+function ProjectPlate({ slug }: { slug: string }) {
+  const plate = PLATES[slug];
+  const layer = plate && getCollage(slug).layers.find((item) => item.id === plate.piece);
+  if (!plate || !layer) return null;
+  const work = getArtwork(plate.work);
+  return (
+    <figure className="flex flex-col gap-2">
+      <div className="-rotate-1 shadow-[0_1px_2px_rgb(20_18_14/0.3),0_14px_30px_rgb(20_18_14/0.18)]">
+        <Plate
+          src={layer.src}
+          width={layer.width}
+          height={layer.height}
+          alt={`${work.title}. ${work.author}, ${work.year}.`}
+          ink={plate.ink}
+          paper={plate.paper}
+        />
+      </div>
+      <figcaption className="font-sans text-[0.8rem] text-muted-foreground">
+        {work.title}. {work.author}, {work.year}.
+      </figcaption>
+    </figure>
+  );
+}
+
+const LINK = "text-link underline decoration-1 underline-offset-4 hover:decoration-2";
 
 async function ProjectFile({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) notFound();
 
-  const { art, block } = projectArt(project.slug);
   const index = projects.indexOf(project);
   const previous = projects[index - 1];
   const next = projects[index + 1];
+  const { repository } = project;
 
   return (
     <>
-      <article className={SHEET}>
-        <Link
-          href={`/#${project.slug}`}
-          className="nb-link font-display text-[0.95rem] font-semibold"
-        >
-          Volver al cuaderno
-        </Link>
-
-        <header className="mt-6 grid gap-6 border-b-2 border-vermilion pb-8 sm:grid-cols-[1fr_14rem] sm:items-end">
-          <div className="flex flex-col gap-3">
-            <p className="font-display font-medium text-ink-soft">{project.kind}</p>
-            <h1 className="font-display text-[clamp(2.5rem,7vw,4.25rem)] leading-[0.92] font-extrabold tracking-[-0.02em] [font-stretch:80%]">
-              {project.name}
-            </h1>
-            <p>
-              <span className={cn("nb-stamp", STATUS_INK[project.status])}>
-                {PROJECT_STATUS_LABEL[project.status]}
-              </span>
-            </p>
-          </div>
-          <figure className={cn("relative w-56 rotate-2 p-2 max-sm:order-first", block)}>
-            <span aria-hidden="true" className="nb-tape -top-2 left-[34%] -rotate-3" />
-            <Cutout id={art} sizes="224px" className="mx-auto max-h-64 w-auto" />
-          </figure>
+      <article className="grid gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
+        <header className="flex flex-col gap-5 lg:col-span-2">
+          <Link href={`/#${project.slug}`} className={`${LINK} self-start text-[0.95rem]`}>
+            Volver al cuaderno
+          </Link>
+          <p className="text-[0.95rem] text-muted-foreground">
+            {project.kind}, {PROJECT_STATUS_LABEL[project.status].toLowerCase()}
+          </p>
+          <h1 className="max-w-[18ch] font-serif text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.02] tracking-[-0.02em] text-balance">
+            {project.name}
+          </h1>
+          <p className="max-w-[46ch] font-serif text-[clamp(1.25rem,2vw,1.6rem)] leading-[1.35] text-pretty">
+            {project.summary}
+          </p>
         </header>
 
-        <p className="mt-8 max-w-[60ch] text-xl leading-relaxed">{project.summary}</p>
-
-        <Section title="El problema">
-          <p className="max-w-[62ch] text-lg leading-relaxed">{project.problem}</p>
-        </Section>
-
-        <Section title="El enfoque">
-          <ul className="flex max-w-[62ch] list-disc flex-col gap-2 pl-5 text-lg leading-relaxed marker:text-vermilion">
-            {project.approach.map((step) => (
-              <li key={step}>{step}</li>
-            ))}
-          </ul>
-        </Section>
-
-        {project.metrics.length > 0 ? (
-          <Section title="Cifras">
-            <dl className="grid gap-6 sm:grid-cols-2">
-              {project.metrics.map((metric) => (
-                <div key={metric.label} className="flex flex-col">
-                  <dt className="order-2 font-display font-semibold">{metric.label}</dt>
-                  <dd className="order-1 font-hand text-5xl font-bold text-vermilion-ink">
-                    {formatMetric(metric)}
-                  </dd>
-                  {metric.note ? (
-                    <dd className="order-3 text-[0.95rem] text-ink-soft">{metric.note}</dd>
-                  ) : null}
-                </div>
-              ))}
-            </dl>
+        <div className="flex flex-col gap-10">
+          <Section title="El problema">
+            <p>{project.problem}</p>
           </Section>
-        ) : null}
 
-        <Section title="Lo destacable">
-          <ul className="flex max-w-[62ch] list-disc flex-col gap-2 pl-5 text-lg leading-relaxed marker:text-vermilion">
-            {project.highlights.map((highlight) => (
-              <li key={highlight}>{highlight}</li>
-            ))}
-          </ul>
-        </Section>
+          <Section title="El enfoque">
+            <ul className="flex flex-col gap-2">
+              {project.approach.map((step) => (
+                <li key={step} className="border-border border-t pt-2">
+                  {step}
+                </li>
+              ))}
+            </ul>
+          </Section>
 
-        <Section title="Con qué está hecho">
-          <ul className="flex flex-wrap gap-2">
-            {project.stack.map((tool) => (
-              <li key={tool} className="nb-strip text-[0.9rem]">
-                {tool}
-              </li>
-            ))}
-          </ul>
-        </Section>
+          <Section title="Lo destacable">
+            <ul className="flex flex-col gap-2">
+              {project.highlights.map((highlight) => (
+                <li key={highlight} className="border-border border-t pt-2">
+                  {highlight}
+                </li>
+              ))}
+            </ul>
+          </Section>
+        </div>
 
-        <p className="mt-10 font-hand text-2xl">
-          <Repository project={project} />
-        </p>
+        <aside className="flex flex-col gap-10">
+          <ProjectPlate slug={project.slug} />
+          {project.metrics.length > 0 ? (
+            <Section title="Cifras">
+              <dl className="flex flex-col gap-6">
+                {project.metrics.map((metric) => (
+                  <div key={metric.label} className="flex flex-col">
+                    <dt className="order-2 font-sans text-[0.95rem] font-semibold">
+                      {metric.label}
+                    </dt>
+                    <dd className="order-1 font-serif text-[2.75rem] leading-none tracking-[-0.02em] tabular-nums">
+                      {formatMetric(metric)}
+                    </dd>
+                    {metric.note ? (
+                      <dd className="order-3 font-sans text-[0.9rem] text-muted-foreground">
+                        {metric.note}
+                      </dd>
+                    ) : null}
+                  </div>
+                ))}
+              </dl>
+            </Section>
+          ) : null}
+
+          <Section title="Con qué está hecho">
+            <p className="font-sans text-[0.95rem] leading-relaxed">{project.stack.join(", ")}.</p>
+          </Section>
+
+          <p className="font-sans text-[0.95rem]">
+            {repository.visibility === "publico" ? (
+              <a href={repository.url} className={LINK}>
+                Ver el repositorio en GitHub
+              </a>
+            ) : (
+              <span className="text-muted-foreground">
+                {repository.visibility === "privado"
+                  ? "El repositorio es privado."
+                  : "Todavía no tiene repositorio."}
+              </span>
+            )}
+          </p>
+        </aside>
       </article>
 
       <nav
         aria-label="Otros proyectos"
-        className="mx-auto mt-10 flex max-w-3xl flex-wrap justify-between gap-4 font-display font-semibold"
+        className="mt-20 flex flex-wrap justify-between gap-4 border-border border-t pt-6 text-[0.95rem]"
       >
         {previous ? (
           <Link href={`/proyectos/${previous.slug}`} className="hover:underline">
@@ -158,12 +199,10 @@ async function ProjectFile({ params }: { params: Promise<{ slug: string }> }) {
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="mt-10 flex flex-col gap-3">
-      <h2 className="font-hand text-3xl font-bold">
-        <span className="nb-mark">{title}</span>
-      </h2>
+    <section className="flex flex-col gap-3 font-serif text-[1.2rem] leading-[1.45]">
+      <h2 className="font-sans text-[0.95rem] font-semibold text-muted-foreground">{title}</h2>
       {children}
     </section>
   );
