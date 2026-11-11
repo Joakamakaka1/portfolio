@@ -93,7 +93,7 @@ async function ProjectFile({ params }: { params: Promise<{ slug: string }> }) {
   return (
     <>
       <article className="grid gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
-        <header className="flex flex-col gap-5 lg:col-span-2">
+        <header className="flex flex-col gap-5">
           <Link href={`/#${project.slug}`} className={`${LINK} self-start text-[0.95rem]`}>
             Volver al cuaderno
           </Link>
@@ -134,7 +134,7 @@ async function ProjectFile({ params }: { params: Promise<{ slug: string }> }) {
           </Section>
         </div>
 
-        <aside className="flex flex-col gap-10">
+        <aside className="flex flex-col gap-10 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:pt-14">
           <ProjectPlate slug={project.slug} />
           {project.metrics.length > 0 ? (
             <Section title="Cifras">
