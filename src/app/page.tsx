@@ -1,69 +1,70 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Collage } from "@/components/collage/Collage";
+import { SiteFooter } from "@/components/site/SiteFooter";
+import { SiteHeader } from "@/components/site/SiteHeader";
+import { type Ink, story } from "@/content";
+import { Story, type StoryStep } from "@/features/story/Story";
+import { StoryNoScript } from "@/features/story/StoryNoScript";
+import { Hero } from "./_components/Hero";
 
-export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+/** The inks of the story, as they print on the wall in each theme. */
+const INK: Record<Ink, string> = {
+  ink: "text-foreground",
+  vermilion: "text-wall-vermilion",
+  cobalt: "text-wall-cobalt",
+  leaf: "text-wall-leaf",
+};
+
+const two = (value: number) => String(value).padStart(2, "0");
+
+const steps: StoryStep[] = story.map((step, index) => ({
+  id: step.id,
+  label: step.label,
+  content: (
+    <div className="mx-auto grid w-full max-w-6xl items-center gap-x-14 gap-y-6 px-5 pt-6 pb-28 sm:px-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+      <div className="flex flex-col gap-5 lg:gap-7">
+        <p className="text-[0.85rem] text-muted-foreground tabular-nums">
+          {two(index + 1)} / {two(story.length)}
+        </p>
+        <h2 className="max-w-[16ch] font-serif text-[clamp(1.9rem,4vw,3.4rem)] leading-[1.05] tracking-[-0.018em] text-balance">
+          {step.title}
+        </h2>
+        <div className="flex max-w-[44ch] flex-col gap-3 font-serif text-[clamp(1.05rem,1.5vw,1.3rem)] leading-[1.4] text-pretty">
+          {step.lines.map((line) => (
+            <p key={line.text} className={INK[line.ink]}>
+              {line.text}
+            </p>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        {step.link ? (
+          <Link
+            href={step.link.href}
+            className="self-start rounded-full bg-primary px-5 py-3 font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+            {step.link.label}
+          </Link>
+        ) : null}
+      </div>
+      <Collage
+        id={step.id}
+        alt={step.picture}
+        width="min(34rem, 90vw)"
+        className="mx-auto max-w-[min(100%,34rem)] max-lg:order-first max-lg:max-w-[min(100%,calc(30svh*1.5))]"
+      />
     </div>
+  ),
+}));
+
+export default function HomePage() {
+  return (
+    <>
+      <SiteHeader home />
+      <main className="flex flex-1 flex-col">
+        <Hero />
+        <Story steps={steps} label="Mi historia" />
+        <StoryNoScript />
+      </main>
+      <SiteFooter home />
+    </>
   );
 }

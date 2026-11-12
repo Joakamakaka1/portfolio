@@ -1,26 +1,185 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "../features/story/story.css";
+@import "../features/projects/board.css";
+@import "../components/collage/collage.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
+/*
+ * Design tokens.
+ *
+ * Two surfaces. The wall (background / foreground) is where everything hangs
+ * and it follows the theme. Paper (paper / ink) never changes: paper stays
+ * paper at night. Text printed straight on the wall in a colour uses the wall
+ * inks, which change with the theme to stay readable.
+ *
+ * Colour is ink, not decoration: vermilion, cobalt and leaf green are used the
+ * way a two-colour print uses them, in small areas over aged paper.
+ *
+ * The shadcn names are kept so components added under src/components/vendor
+ * pick the palette up.
+ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-link: var(--link);
+
+  --color-wall-vermilion: var(--wall-vermilion);
+  --color-wall-cobalt: var(--wall-cobalt);
+  --color-wall-leaf: var(--wall-leaf);
+  --color-paper: var(--paper);
+  --color-paper-aged: var(--paper-aged);
+  --color-grid: var(--grid);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-vermilion: var(--vermilion);
+  --color-vermilion-ink: var(--vermilion-ink);
+  --color-cobalt: var(--cobalt);
+  --color-leaf: var(--leaf);
+  --color-leaf-ink: var(--leaf-ink);
+  --color-mint: var(--mint);
+  --color-peach: var(--peach);
+  --color-sky: var(--sky);
+
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-newsreader), ui-serif, Georgia, serif;
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.5rem;
+
+  /* Paper and inks: the same in both themes. */
+  --paper: #f6f5f0;
+  --paper-aged: #e9e1cd;
+  --grid: #d3d8e0;
+  --ink: #1e2321;
+  --ink-soft: #585d59;
+  --vermilion: #e5432b;
+  --vermilion-ink: #bf321c;
+  --cobalt: #2b55b5;
+  --leaf: #46a063;
+  --leaf-ink: #2a7343;
+  --mint: #cfe6cf;
+  --peach: #f5cdb4;
+  --sky: #cdd8f5;
+
+  /* Coloured text on the wall. */
+  --wall-vermilion: #bf321c;
+  --wall-cobalt: #2b55b5;
+  --wall-leaf: #2a7343;
+
+  /* The wall by day. */
+  --background: #f4f2ec;
+  --foreground: #1e2321;
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: #1e2321;
+  --primary-foreground: #f6f5f0;
+  --secondary: #e7e3d8;
+  --secondary-foreground: #1e2321;
+  --muted: #e7e3d8;
+  --muted-foreground: #5a5f5a;
+  --accent: #e7e3d8;
+  --accent-foreground: #1e2321;
+  --destructive: #bf321c;
+  --border: #d6d2c5;
+  --input: #a9a596;
+  --ring: #2b55b5;
+  --link: #2449a3;
+}
+
+.dark {
+  /* The wall by night; paper keeps its colour. */
+  --wall-vermilion: #ff8f7c;
+  --wall-cobalt: #a9bcff;
+  --wall-leaf: #84d39e;
+  --background: #1b1e2b;
+  --foreground: #eceae3;
+  --primary: #eceae3;
+  --primary-foreground: #1e2321;
+  --secondary: #2a2e40;
+  --secondary-foreground: #eceae3;
+  --muted: #2a2e40;
+  --muted-foreground: #b9bccb;
+  --accent: #2a2e40;
+  --accent-foreground: #eceae3;
+  --destructive: #ff8a78;
+  --border: #3a3f55;
+  --input: #5d6380;
+  --ring: #a9bcff;
+  --link: #b3c4ff;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--cobalt);
+    color: #fff;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Fine grain, so a flat colour reads as a surface. */
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    /* biome-ignore lint/complexity/noImportantStyles: has to override every animation on the page */
+    animation-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: has to override every animation on the page */
+    animation-iteration-count: 1 !important;
+    /* biome-ignore lint/complexity/noImportantStyles: has to override every transition on the page */
+    transition-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: a delayed step must not outlive its transition */
+    transition-delay: 0s !important;
+    /* biome-ignore lint/complexity/noImportantStyles: has to override the pager's smooth scrolling */
+    scroll-behavior: auto !important;
+  }
 }

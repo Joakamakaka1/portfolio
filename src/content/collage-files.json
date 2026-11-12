@@ -1,0 +1,162 @@
+{
+  "footer/balloon": {
+    "w": 330,
+    "h": 460
+  },
+  "footer/cloud-a": {
+    "w": 420,
+    "h": 130
+  },
+  "footer/cloud-b": {
+    "w": 300,
+    "h": 96
+  },
+  "footer/hill-far": {
+    "w": 1900,
+    "h": 340
+  },
+  "footer/hill-mid": {
+    "w": 1900,
+    "h": 300
+  },
+  "footer/sun": {
+    "w": 320,
+    "h": 320
+  },
+  "footer/tree": {
+    "w": 390,
+    "h": 673
+  },
+  "hero/label": {
+    "w": 300,
+    "h": 92
+  },
+  "hero/leaf": {
+    "w": 420,
+    "h": 450
+  },
+  "hero/matrix": {
+    "w": 320,
+    "h": 386
+  },
+  "hero/octopus": {
+    "w": 1184,
+    "h": 1560
+  },
+  "hero/octopus-read": {
+    "w": 1184,
+    "h": 1560
+  },
+  "hero/page": {
+    "w": 980,
+    "h": 1240
+  },
+  "hero/red": {
+    "w": 560,
+    "h": 700
+  },
+  "hero/stripe": {
+    "w": 640,
+    "h": 330
+  },
+  "hero/tool-measure": {
+    "w": 330,
+    "h": 343
+  },
+  "hero/tool-observe": {
+    "w": 330,
+    "h": 369
+  },
+  "hero/tool-write": {
+    "w": 330,
+    "h": 317
+  },
+  "hero/under": {
+    "w": 760,
+    "h": 520
+  },
+  "lost/icarus": {
+    "w": 897,
+    "h": 897
+  },
+  "story/config-block": {
+    "w": 300,
+    "h": 155
+  },
+  "story/config-plate": {
+    "w": 620,
+    "h": 533
+  },
+  "story/cronista-block": {
+    "w": 280,
+    "h": 269
+  },
+  "story/cronista-plate": {
+    "w": 620,
+    "h": 582
+  },
+  "story/hotel-block": {
+    "w": 260,
+    "h": 290
+  },
+  "story/hotel-plate": {
+    "w": 640,
+    "h": 541
+  },
+  "story/measure-block": {
+    "w": 260,
+    "h": 270
+  },
+  "story/measure-figure": {
+    "w": 654,
+    "h": 669
+  },
+  "story/paper-blue": {
+    "w": 420,
+    "h": 240
+  },
+  "story/paper-red": {
+    "w": 420,
+    "h": 300
+  },
+  "story/projects-block": {
+    "w": 220,
+    "h": 365
+  },
+  "story/projects-plate": {
+    "w": 680,
+    "h": 550
+  },
+  "story/seed-block": {
+    "w": 280,
+    "h": 327
+  },
+  "story/seed-page": {
+    "w": 660,
+    "h": 563
+  },
+  "story/speak-figure": {
+    "w": 734,
+    "h": 550
+  },
+  "story/text-a": {
+    "w": 420,
+    "h": 292
+  },
+  "story/text-b": {
+    "w": 380,
+    "h": 232
+  },
+  "story/twochi-figure": {
+    "w": 716,
+    "h": 493
+  },
+  "story/who-block": {
+    "w": 300,
+    "h": 261
+  },
+  "story/who-figure": {
+    "w": 640,
+    "h": 507
+  }
+}

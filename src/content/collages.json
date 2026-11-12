@@ -1,0 +1,463 @@
+{
+  "hero": {
+    "ratio": 0.96,
+    "layers": [
+      {
+        "id": "under",
+        "x": 3.1,
+        "y": 60,
+        "w": 53.1,
+        "r": 1.5,
+        "depth": 0.4
+      },
+      {
+        "id": "red",
+        "x": 54.7,
+        "y": 1,
+        "w": 35.9,
+        "r": 3,
+        "depth": 0.6
+      },
+      {
+        "id": "stripe",
+        "x": 59.4,
+        "y": 50,
+        "w": 39.1,
+        "r": -5,
+        "depth": 0.7
+      },
+      {
+        "id": "page",
+        "x": 12.5,
+        "y": 3,
+        "w": 62.5,
+        "r": -1.5,
+        "depth": 1
+      },
+      {
+        "id": "tool-write",
+        "x": 3.1,
+        "y": 6,
+        "w": 18.8,
+        "r": -5,
+        "depth": 1.6
+      },
+      {
+        "id": "tool-observe",
+        "x": 71.9,
+        "y": 12,
+        "w": 18.8,
+        "r": 4,
+        "depth": 1.6
+      },
+      {
+        "id": "tool-measure",
+        "x": 68.8,
+        "y": 64,
+        "w": 17.2,
+        "r": -3,
+        "depth": 1.6
+      },
+      {
+        "id": "leaf",
+        "x": 1.6,
+        "y": 33,
+        "w": 20.3,
+        "r": 0,
+        "depth": 1.8
+      },
+      {
+        "id": "matrix",
+        "x": 4.5,
+        "y": 61,
+        "w": 15.6,
+        "r": 3,
+        "depth": 1.8
+      },
+      {
+        "id": "octopus",
+        "x": 15.6,
+        "y": 2,
+        "w": 64.1,
+        "r": 0,
+        "shadow": 0,
+        "depth": 2.4
+      },
+      {
+        "id": "octopus-read",
+        "x": 15.6,
+        "y": 2,
+        "w": 64.1,
+        "r": 0,
+        "depth": 2.4,
+        "shadow": 0
+      },
+      {
+        "id": "label",
+        "x": 54.7,
+        "y": 83,
+        "w": 15.6,
+        "r": -2,
+        "depth": 2.8
+      }
+    ]
+  },
+  "quien-soy": {
+    "set": "story",
+    "ratio": 1.62,
+    "ground": [246, 245, 240],
+    "layers": [
+      {
+        "id": "text-a",
+        "x": 3,
+        "y": 39.9,
+        "w": 43.4,
+        "r": -5,
+        "depth": 0.4
+      },
+      {
+        "id": "who-figure",
+        "x": 29.5,
+        "y": 8.8,
+        "w": 67.5,
+        "r": 2,
+        "depth": 0.8
+      },
+      {
+        "id": "who-block",
+        "x": 50,
+        "y": 4.9,
+        "w": 28.9,
+        "r": -3,
+        "depth": 1.4
+      }
+    ]
+  },
+  "el-principio": {
+    "set": "story",
+    "ratio": 1.58,
+    "ground": [246, 245, 240],
+    "layers": [
+      {
+        "id": "paper-blue",
+        "x": 2.8,
+        "y": 54.3,
+        "w": 44.9,
+        "r": -6,
+        "depth": 0.4
+      },
+      {
+        "id": "seed-page",
+        "x": 29.8,
+        "y": 4.4,
+        "w": 67.4,
+        "r": 2,
+        "depth": 0.8
+      },
+      {
+        "id": "seed-block",
+        "x": 9.6,
+        "y": 6.8,
+        "w": 29.2,
+        "r": -4,
+        "depth": 1.4
+      }
+    ]
+  },
+  "ahora": {
+    "set": "story",
+    "ratio": 1.47,
+    "ground": [246, 245, 240],
+    "layers": [
+      {
+        "id": "paper-red",
+        "x": 55.3,
+        "y": 3.9,
+        "w": 42.1,
+        "r": 3,
+        "depth": 0.4
+      },
+      {
+        "id": "text-b",
+        "x": 2.6,
+        "y": 63.9,
+        "w": 35.8,
+        "r": -3,
+        "depth": 0.6
+      },
+      {
+        "id": "speak-figure",
+        "x": 13.2,
+        "y": 6,
+        "w": 80,
+        "r": 0,
+        "depth": 1.2,
+        "shadow": 0
+      }
+    ]
+  },
+  "lo-que-mido": {
+    "set": "story",
+    "ratio": 1.5,
+    "ground": [246, 245, 240],
+    "layers": [
+      {
+        "id": "text-a",
+        "x": 54.3,
+        "y": 51.2,
+        "w": 43,
+        "r": 4,
+        "depth": 0.4
+      },
+      {
+        "id": "measure-block",
+        "x": 2.7,
+        "y": 12.6,
+        "w": 30.1,
+        "r": -4,
+        "depth": 0.7
+      },
+      {
+        "id": "measure-figure",
+        "x": 26.3,
+        "y": 4,
+        "w": 55.9,
+        "r": 0,
+        "depth": 1.2,
+        "shadow": 0
+      }
+    ]
+  },
+  "por-mi-cuenta": {
+    "set": "story",
+    "ratio": 1.54,
+    "ground": [246, 245, 240],
+    "layers": [
+      {
+        "id": "paper-red",
+        "x": 52.4,
+        "y": 45.6,
+        "w": 44.7,
+        "r": -4,
+        "depth": 0.4
+      },
+      {
+        "id": "projects-plate",
+        "x": 2.9,
+        "y": 4.5,
+        "w": 72.9,
+        "r": -2,
+        "depth": 0.8
+      },
+      {
+        "id": "projects-block",
+        "x": 64.1,
+        "y": 7,
+        "w": 23.5,
+        "r": 5,
+        "depth": 1.4
+      }
+    ]
+  },
+  "cronista": {
+    "set": "story",
+    "ratio": 1.51,
+    "ground": [246, 245, 240],
+    "layers": [
+      {
+        "id": "text-b",
+        "x": 54.3,
+        "y": 56.2,
+        "w": 43,
+        "r": 3,
+        "depth": 0.4
+      },
+      {
+        "id": "cronista-plate",
+        "x": 17.7,
+        "y": 4.1,
+        "w": 58.1,
+        "r": 2,
+        "depth": 0.8
+      },
+      {
+        "id": "cronista-block",
+        "x": 2.7,
+        "y": 43.1,
+        "w": 30.1,
+        "r": -5,
+        "depth": 1.4
+      }
+    ]
+  },
+  "cancelaciones-hotel": {
+    "set": "story",
+    "ratio": 1.34,
+    "ground": [246, 245, 240],
+    "layers": [
+      {
+        "id": "paper-blue",
+        "x": 45.3,
+        "y": 56.5,
+        "w": 51.8,
+        "r": 4,
+        "depth": 0.4
+      },
+      {
+        "id": "hotel-plate",
+        "x": 2.9,
+        "y": 3.9,
+        "w": 68.2,
+        "r": -2,
+        "depth": 0.8
+      },
+      {
+        "id": "hotel-block",
+        "x": 61.8,
+        "y": 8.1,
+        "w": 28.2,
+        "r": 4,
+        "depth": 1.4
+      }
+    ]
+  },
+  "twochi": {
+    "set": "story",
+    "ratio": 1.5,
+    "ground": [246, 245, 240],
+    "layers": [
+      {
+        "id": "paper-red",
+        "x": 2.8,
+        "y": 13.2,
+        "w": 44.9,
+        "r": -4,
+        "depth": 0.4
+      },
+      {
+        "id": "text-a",
+        "x": 56.7,
+        "y": 53.6,
+        "w": 40.4,
+        "r": 5,
+        "depth": 0.5
+      },
+      {
+        "id": "twochi-figure",
+        "x": 11.8,
+        "y": 4.2,
+        "w": 76.4,
+        "r": 0,
+        "depth": 1.2,
+        "shadow": 0
+      }
+    ]
+  },
+  "configuracion-evaluada": {
+    "set": "story",
+    "ratio": 1.61,
+    "ground": [246, 245, 240],
+    "layers": [
+      {
+        "id": "paper-blue",
+        "x": 2.7,
+        "y": 11.5,
+        "w": 44,
+        "r": -5,
+        "depth": 0.4
+      },
+      {
+        "id": "config-plate",
+        "x": 24.7,
+        "y": 4.4,
+        "w": 61.5,
+        "r": 2,
+        "depth": 0.8
+      },
+      {
+        "id": "config-block",
+        "x": 64.3,
+        "y": 68.1,
+        "w": 33,
+        "r": -4,
+        "depth": 1.4
+      }
+    ]
+  },
+  "footer": {
+    "ratio": 2.8,
+    "ground": [222, 219, 198],
+    "layers": [
+      {
+        "id": "sun",
+        "x": 62,
+        "y": 43,
+        "w": 11,
+        "r": 0,
+        "depth": 0.3,
+        "shadow": 0
+      },
+      {
+        "id": "cloud-a",
+        "x": 4,
+        "y": 46,
+        "w": 17,
+        "r": -2,
+        "depth": 0.5
+      },
+      {
+        "id": "cloud-b",
+        "x": 70,
+        "y": 38,
+        "w": 12,
+        "r": 3,
+        "depth": 0.6
+      },
+      {
+        "id": "hill-far",
+        "x": -2,
+        "y": 61,
+        "w": 104,
+        "r": 0,
+        "depth": 0.8
+      },
+      {
+        "id": "balloon",
+        "x": 45.5,
+        "y": 9,
+        "w": 7.5,
+        "r": 5,
+        "depth": 1.4
+      },
+      {
+        "id": "tree",
+        "x": 86,
+        "y": 39,
+        "w": 9,
+        "r": 7,
+        "depth": 1.2
+      },
+      {
+        "id": "hill-mid",
+        "x": -2,
+        "y": 78,
+        "w": 104,
+        "r": 0,
+        "depth": 1.8
+      }
+    ]
+  },
+  "lost": {
+    "ratio": 1,
+    "layers": [
+      {
+        "id": "icarus",
+        "x": 4,
+        "y": 4,
+        "w": 92,
+        "r": -8,
+        "depth": 1.5
+      }
+    ]
+  }
+}

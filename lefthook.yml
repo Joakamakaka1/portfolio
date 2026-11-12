@@ -1,0 +1,11 @@
+pre-commit:
+  jobs:
+    - name: biome
+      glob: "*.{ts,tsx,js,mjs,mts,json,jsonc,css}"
+      run: pnpm exec biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+
+commit-msg:
+  jobs:
+    - name: conventional commit
+      run: node scripts/check-commit-msg.mjs {1}
