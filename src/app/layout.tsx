@@ -19,6 +19,7 @@ const sans = Instrument_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(profile.url),
   title: {
     default: `${profile.name} · ${profile.role}`,
     template: `%s · ${profile.name}`,

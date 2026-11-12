@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Collage } from "@/components/collage/Collage";
 import { SiteFooter } from "@/components/site/SiteFooter";
@@ -6,6 +7,10 @@ import { type Ink, story } from "@/content";
 import { Story, type StoryStep } from "@/features/story/Story";
 import { StoryNoScript } from "@/features/story/StoryNoScript";
 import { Hero } from "./_components/Hero";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 /** The inks of the story, as they print on the wall in each theme. */
 const INK: Record<Ink, string> = {

@@ -26,6 +26,8 @@ export const profileSchema = z.object({
   about: z.array(z.string().min(1)).min(1),
   location: z.string().min(1),
   email: z.email(),
+  /** Where the site is served; canonical links and the sitemap are built on it. */
+  url: z.url({ protocol: /^https$/ }),
   links: z.object({
     github: linkSchema,
     linkedin: linkSchema,
