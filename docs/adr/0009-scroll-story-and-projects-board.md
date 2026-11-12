@@ -60,9 +60,10 @@ The owner approved the collage direction of ADR 0008 and asked for a different s
 - The notebook, its model and its tests are gone; so are its URL fragments.
 - An unknown project is answered with the not-found page but with status 200: the route's
   shell is sent before the slug is known. Next.js marks that page `noindex`.
-- In development a project page is streamed and cannot be read without JavaScript; the
-  production build prerenders the four projects. The end-to-end test for that case runs
-  only against the build (`CI=1`).
+- The board is not wrapped in `Suspense`. Both routes are prerendered with their pathname
+  known, so `usePathname` does not suspend; a boundary there only made the board arrive as
+  a streamed segment, which stays hidden without JavaScript. Only the guard that checks
+  the slug sits behind `Suspense`, and it renders nothing.
 - The story costs as much scroll as it has steps. Adding a step makes the page longer, and
   a step whose text does not fit a phone screen has to be shortened: the stage does not
   scroll inside.

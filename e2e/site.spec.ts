@@ -215,10 +215,6 @@ test.describe("without JavaScript", () => {
   });
 
   test("opens and closes a project with plain links", async ({ page }) => {
-    test.skip(
-      !process.env.CI,
-      "the dev server streams a project page, which needs JavaScript; the build prerenders it",
-    );
     await page.goto("/proyectos");
     await page.locator('.board-card[href="/proyectos/cronista"]').click();
     await expect(page).toHaveURL(/\/proyectos\/cronista$/);

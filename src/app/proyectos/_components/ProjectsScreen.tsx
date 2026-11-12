@@ -1,4 +1,4 @@
-import { type ReactNode, Suspense } from "react";
+import type { ReactNode } from "react";
 import { Collage } from "@/components/collage/Collage";
 import { formatMetric } from "@/components/site/format";
 import { SiteFooter } from "@/components/site/SiteFooter";
@@ -217,10 +217,9 @@ export function ProjectsScreen() {
       <SiteHeader wide />
       <main className="relative flex min-h-[calc(100svh-5.25rem)] flex-1 max-[899px]:flex-col">
         <h1 className="board-label">Proyectos</h1>
-        {/* The board reads the URL; behind Suspense the rest of the page does not wait for it. */}
-        <Suspense fallback={<div className="board" />}>
-          <ProjectsBoard projects={board} base={PROJECTS_PATH} title={projectsTitle(null)} />
-        </Suspense>
+        {/* No Suspense here: every route of the board is prerendered with its pathname
+            known, and a boundary would send the board as a segment hidden without JavaScript. */}
+        <ProjectsBoard projects={board} base={PROJECTS_PATH} title={projectsTitle(null)} />
         <Rail />
       </main>
       <SiteFooter />

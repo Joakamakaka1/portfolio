@@ -37,8 +37,7 @@ Then open <http://localhost:3000>.
 | `pnpm test:e2e`  | Playwright on desktop and mobile, with axe accessibility checks |
 
 `pnpm test:e2e` needs the browser once: `pnpm exec playwright install chromium`. It runs
-against the dev server; with `CI=1` it runs against the production build (`pnpm build` first),
-which is the only way to check a project page without JavaScript.
+against the dev server; with `CI=1` it runs against the production build (`pnpm build` first).
 
 A pre-commit hook (lefthook) formats staged files, and a commit-msg hook enforces
 [Conventional Commits](https://www.conventionalcommits.org). CI runs the same checks plus a
