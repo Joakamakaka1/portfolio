@@ -31,6 +31,7 @@ export const profileData: z.input<typeof profileSchema> = {
   ],
   location: "España",
   email: "jcastrosalas03@gmail.com",
+  url: "https://jcvstro.dev",
   links: {
     github: { label: "GitHub", url: "https://github.com/Joakamakaka1" },
     linkedin: {

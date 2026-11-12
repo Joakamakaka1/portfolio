@@ -5,6 +5,7 @@ import { artwork } from "@/content";
 
 export const metadata: Metadata = {
   title: "Créditos de las láminas",
+  alternates: { canonical: "/creditos" },
   description: "Los grabados de dominio público con los que están hechos los collages del sitio.",
 };
 

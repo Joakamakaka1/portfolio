@@ -11,7 +11,13 @@ export function generateStaticParams() {
 export async function generateMetadata(props: PageProps<"/proyectos/[slug]">): Promise<Metadata> {
   const { slug } = await props.params;
   const project = getProject(slug);
-  return project ? { title: project.name, description: project.summary } : {};
+  return project
+    ? {
+        title: project.name,
+        description: project.summary,
+        alternates: { canonical: `/proyectos/${project.slug}` },
+      }
+    : {};
 }
 
 /**
