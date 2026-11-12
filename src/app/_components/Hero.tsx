@@ -79,7 +79,10 @@ export function Hero() {
   const read = layer("octopus-read");
 
   return (
-    <section className="mx-auto grid w-full max-w-6xl items-center gap-x-14 gap-y-8 px-5 pt-2 pb-16 sm:px-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:pb-20">
+    // On wide screens the hero takes the rest of the first screen and centres
+    // its content in it, so it sits clear of the header and the story starts
+    // below the fold. On phones it stacks and keeps a plain padding.
+    <section className="mx-auto grid w-full max-w-6xl items-center gap-x-14 gap-y-8 px-5 pt-2 pb-16 sm:px-8 lg:min-h-[calc(100svh-5rem)] lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:py-10">
       <figure className="flex flex-col items-center lg:order-2">
         <Collage
           id="hero"
@@ -87,7 +90,7 @@ export function Hero() {
           width="min(38rem, 100vw)"
           intro
           priority
-          className="max-w-[min(100%,calc(78svh*0.96))]"
+          className="max-w-[min(100%,calc(78svh*0.96))] lg:max-w-[min(100%,calc((100svh-13rem)*0.96))]"
           slots={{
             "octopus-read": null,
             octopus: plate && read ? <Reading plate={plate.src} read={read.src} /> : null,
@@ -101,7 +104,7 @@ export function Hero() {
       </figure>
 
       <div className="flex flex-col gap-9 lg:order-1">
-        <h1 className="max-w-[13ch] font-serif text-[clamp(2.4rem,4.7vw,4.1rem)] leading-[1.03] tracking-[-0.02em] text-balance">
+        <h1 className="max-w-[13ch] font-serif text-[clamp(2.4rem,min(4.7vw,7.2svh),4.1rem)] leading-[1.03] tracking-[-0.02em] text-balance">
           {profile.headline}
         </h1>
         <ul className="flex max-w-[40ch] flex-col gap-4">
