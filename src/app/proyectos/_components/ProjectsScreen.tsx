@@ -177,36 +177,6 @@ const board: BoardProject[] = projects.map((project, index) => ({
   detail: <Detail project={project} />,
 }));
 
-/** Contact, written up the side of the board. */
-function Rail() {
-  const links = [
-    { label: "LinkedIn", href: profile.links.linkedin.url },
-    { label: "GitHub", href: profile.links.github.url },
-    { label: "Correo", href: `mailto:${profile.email}` },
-  ];
-  return (
-    <aside
-      aria-label="Contacto"
-      className="sticky top-0 flex h-svh w-14 shrink-0 flex-col items-center gap-6 self-start pt-[clamp(6rem,22svh,12.5rem)] text-[0.8rem] max-xl:hidden"
-    >
-      <p className="font-semibold [writing-mode:vertical-rl]">Contacto</p>
-      <span aria-hidden="true" className="h-16 w-px bg-border" />
-      <ul className="flex flex-col items-center gap-5">
-        {links.map((link) => (
-          <li key={link.label}>
-            <a
-              href={link.href}
-              className="underline-offset-4 [writing-mode:vertical-rl] hover:underline"
-            >
-              {link.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </aside>
-  );
-}
-
 /**
  * The projects page, shared by `/proyectos` and `/proyectos/[slug]`: the board
  * reads the URL to know which project, if any, is open.
@@ -216,11 +186,11 @@ export function ProjectsScreen() {
     <>
       <SiteHeader wide />
       <main className="relative flex min-h-[calc(100svh-5.25rem)] flex-1 max-[899px]:flex-col">
-        <h1 className="board-label">Proyectos</h1>
+        {/* The header already says where we are; the heading is there for screen readers. */}
+        <h1 className="sr-only">Proyectos</h1>
         {/* No Suspense here: every route of the board is prerendered with its pathname
             known, and a boundary would send the board as a segment hidden without JavaScript. */}
         <ProjectsBoard projects={board} base={PROJECTS_PATH} title={projectsTitle(null)} />
-        <Rail />
       </main>
       <SiteFooter />
     </>
