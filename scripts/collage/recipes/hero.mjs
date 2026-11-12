@@ -191,8 +191,6 @@ export default {
     tool(context, "scales", { left: 0.36, top: 0.3, width: 0.3, height: 0.44 }, GREEN, 42),
   "tool-write": (context) =>
     tool(context, "printer", { left: 0.05, top: 0.1, width: 0.9, height: 0.74 }, BLUE, 43),
-  "tool-reason": (context) =>
-    tool(context, "turk", { left: 0.4, top: 0.4, width: 0.25, height: 0.15 }, RED, 44),
 
   /** A typed slip. */
   async label({ kit }) {

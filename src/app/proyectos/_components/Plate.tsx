@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import HalftoneReveal from "@/components/vendor/react-bits/HalftoneReveal";
+import { HalftoneReveal } from "@/components/site/effects";
 
 /**
  * The print of a project, shown as a coarse halftone that the pointer develops

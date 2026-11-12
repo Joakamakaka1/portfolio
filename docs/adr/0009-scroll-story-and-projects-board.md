@@ -45,7 +45,8 @@ The owner approved the collage direction of ADR 0008 and asked for a different s
   open one grows, the others close. A reload, a shared link, the browser's back button and
   the no-JavaScript fallback all work because the two routes are real.
 - Opening a project behaves as a page change: the tab title is updated, the page returns
-  to the top and focus moves to the way back; closing returns focus to the column.
+  to the top and focus moves to the way back. Closing brings the column back into view
+  and returns focus to it.
 - Columns pushed aside are `inert`. The card of a column keeps one column's width
   (container query units), so nothing in it moves while the column grows.
 

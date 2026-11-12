@@ -15,7 +15,7 @@
 // repository (ARTWORK_CACHE, or the system temp folder) and never committed.
 
 import { existsSync } from "node:fs";
-import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -98,14 +98,35 @@ const recipeFiles = (await readdir(join(here, "recipes"))).filter((f) => f.endsW
 const sizes = existsSync(sizesPath) ? await readJson(sizesPath) : {};
 const placements = await readJson(join(root, "src/content/collages.json"));
 
+// The first argument names a recipe, not a collage: say so instead of doing nothing.
+const recipeIds = recipeFiles.map((file) => file.replace(/\.mjs$/, ""));
+if (wanted.length && !recipeIds.includes(wanted[0])) {
+  const set = placements[wanted[0]]?.set;
+  throw new Error(
+    set
+      ? `"${wanted[0]}" takes its pieces from the recipe "${set}": run "pnpm collage ${set}"`
+      : `No recipe "${wanted[0]}". Recipes: ${recipeIds.join(", ")}`,
+  );
+}
+
 for (const file of recipeFiles) {
   const id = file.replace(/\.mjs$/, "");
   // A second argument narrows the build to some pieces: `pnpm collage hero page,scrap`.
   if (wanted.length && wanted[0] !== id) continue;
   const only = wanted[1]?.split(",");
   const recipe = (await import(pathToFileURL(join(here, "recipes", file)).href)).default;
+  const unknown = only?.filter((piece) => !(piece in recipe)) ?? [];
+  if (unknown.length) throw new Error(`${id} makes no piece ${unknown.join(", ")}`);
   await mkdir(join(outDir, id), { recursive: true });
   if (!flattenOnly) {
+    // Pieces the recipe no longer makes leave the folder and the list.
+    for (const name of await readdir(join(outDir, id))) {
+      const piece = name.replace(/\.webp$/, "");
+      if (name.endsWith(".webp") && !(piece in recipe)) {
+        await rm(join(outDir, id, name));
+        delete sizes[`${id}/${piece}`];
+      }
+    }
     for (const [piece, make] of Object.entries(recipe)) {
       if (only && !only.includes(piece)) continue;
       const started = Date.now();
@@ -119,7 +140,7 @@ for (const file of recipeFiles) {
         `${Date.now() - started} ms`.padStart(9),
       );
     }
-    // Pieces dropped from a recipe leave the list too.
+    // Pieces whose file is gone leave the list too.
     const sorted = Object.fromEntries(
       Object.entries(sizes)
         .filter(([piece]) => existsSync(join(outDir, `${piece}.webp`)))

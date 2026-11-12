@@ -83,7 +83,7 @@ Personal portfolio of Joaquín Castro Salas. Read [README.md](README.md) for the
 - Anything that moves on its own must stop under `prefers-reduced-motion`; see
   `useReducedMotion` in `src/features/prefs/use-prefs.ts`.
 - WebGL and canvas effects load with `next/dynamic` and `ssr: false`, and never carry
-  content.
+  content. Import them from `src/components/site/effects.tsx`.
 - The theme is a class on `<html>` set before first paint
   (`src/features/prefs/prefs.ts`). Do not read it from `localStorage` during render.
 

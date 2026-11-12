@@ -50,15 +50,23 @@ export function ProjectsBoard({
   const rootRef = useRef<HTMLDivElement>(null);
   const shown = useRef(open);
 
-  // When the open project changes, the page behaves as a new page would.
+  // When the open project changes, the page behaves as a new page would: an
+  // opened project starts at the top; closing it goes back to its column,
+  // wherever that is on the page (on phones the columns are rows).
   useEffect(() => {
     if (shown.current === open) return;
     const closed = shown.current;
     shown.current = open;
     document.title = projects.find((project) => project.slug === open)?.title ?? title;
-    window.scrollTo({ top: 0, behavior: "instant" });
-    const target = open ? `[data-back="${open}"]` : `[data-card="${closed}"]`;
-    rootRef.current?.querySelector<HTMLElement>(target)?.focus({ preventScroll: true });
+    const root = rootRef.current;
+    if (open) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+      root?.querySelector<HTMLElement>(`[data-back="${open}"]`)?.focus({ preventScroll: true });
+    } else {
+      const card = root?.querySelector<HTMLElement>(`[data-card="${closed}"]`);
+      card?.focus({ preventScroll: true });
+      card?.scrollIntoView({ block: "nearest", behavior: "instant" });
+    }
   }, [open, projects, title]);
 
   function go(event: MouseEvent, slug: string | null) {

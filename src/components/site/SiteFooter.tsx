@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Collage } from "@/components/collage/Collage";
-import Noise from "@/components/vendor/react-bits/Noise";
+import { Noise } from "@/components/site/effects";
 import { profile } from "@/content";
 
 const LINK = "underline-offset-4 hover:underline";

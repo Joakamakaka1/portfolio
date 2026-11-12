@@ -105,11 +105,14 @@ export async function load(path, { crop, width } = {}) {
   let pipeline = sharp(path, { limitInputPixels: false }).rotate();
   if (crop) {
     const meta = await sharp(path, { limitInputPixels: false }).metadata();
+    // Rounded separately, the box can end a pixel past the edge; keep it inside.
+    const left = Math.round(crop.left * meta.width);
+    const top = Math.round(crop.top * meta.height);
     pipeline = pipeline.extract({
-      left: Math.round(crop.left * meta.width),
-      top: Math.round(crop.top * meta.height),
-      width: Math.round(crop.width * meta.width),
-      height: Math.round(crop.height * meta.height),
+      left,
+      top,
+      width: Math.min(Math.round(crop.width * meta.width), meta.width - left),
+      height: Math.min(Math.round(crop.height * meta.height), meta.height - top),
     });
   }
   if (width) pipeline = pipeline.resize({ width });
@@ -172,6 +175,9 @@ export async function savePng(img, path) {
 
 /** Takes a rectangle out of an image, in pixels. */
 export function crop(img, x, y, w, h) {
+  if (x < 0 || y < 0 || w <= 0 || h <= 0 || x + w > img.w || y + h > img.h) {
+    throw new RangeError(`crop ${w}×${h} at ${x},${y} falls outside a ${img.w}×${img.h} image`);
+  }
   const out = blank(w, h);
   for (let row = 0; row < h; row += 1) {
     const from = ((y + row) * img.w + x) * 4;
